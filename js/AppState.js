@@ -1,0 +1,2 @@
+var AppState = function(){
+}

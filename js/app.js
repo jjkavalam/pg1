@@ -6,22 +6,47 @@
     EmployeeListView.prototype.template = Handlebars.compile($("#employee-list-tpl").html());
     EmployeeView.prototype.template = Handlebars.compile($("#employee-tpl").html());
 
-    var service = new EmployeeService();
+    var voteService = new VoteService();
+    var service = new EmployeeService();    
     var slider = new PageSlider($('body'));
-    service.initialize().done(function () {
-        router.addRoute('', function() {
-            console.log('empty');
-            slider.slidePage(new HomeView(service).render().$el);
-        });
-
-        router.addRoute('employees/:id', function(id) {
-            console.log('details');
-            service.findById(parseInt(id)).done(function(employee) {
-                slider.slidePage(new EmployeeView(employee).render().$el);
+  
+    var makeEmployeeView = function(id){
+        console.log('make Employee view ');
+        var employee = service.findByIdSync(parseInt(id));
+        var numvotes = voteService.getNumVotesById(parseInt(id));
+        if (numvotes == undefined) numvotes = 0;
+        return new EmployeeView(employee, numvotes);                        
+    };
+                    
+    voteService.initialize().done(function(){
+    
+        service.initialize().done(function () {
+            router.addRoute('', function() {
+                console.log('empty');
+                slider.slidePage(new HomeView(service).render().$el);
             });
-        });
 
-        router.start();
+            router.addRoute('employees/:id', function(id) {
+                slider.slidePage(makeEmployeeView(id).render().$el);
+            });
+
+            router.addRoute('upvote/:id/:current_votes', function(id, current_votes) {
+                voteService.updateVotesOfId(id, parseInt(current_votes)+1);
+                Animate.prototype.animateNow($('.vote-text'),'flash').done(function(){
+                    slider.replaceCurrentPage(makeEmployeeView(id).render().$el);
+                });                                
+            });
+            
+            router.addRoute('downvote/:id/:current_votes', function(id, current_votes) {
+                voteService.updateVotesOfId(id, parseInt(current_votes)-1);
+                Animate.prototype.animateNow($('.vote-text'),'flash').done(function(){
+                    slider.replaceCurrentPage(makeEmployeeView(id).render().$el);
+                });                                            
+            });            
+            
+            router.start();
+        });
+    
     });
 
     /* --------------------------------- Event Registration -------------------------------- */
@@ -40,8 +65,11 @@
                 );
             };
         }
+                        
     }, false);
-
+    $(document).ready(function(){
+                //
+    });
     /* ---------------------------------- Local Functions ---------------------------------- */
 
 }());
