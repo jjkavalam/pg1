@@ -11,13 +11,68 @@
 <body>
 
 <script id="home-tpl" type="text/template">
-    <header class="bar bar-nav">
-        <h1 class="title">Directory</h1>
+  <header class="bar bar-nav">
+  <button class="btn btn-link btn-nav pull-left">
+    <span class="icon icon-left-nav"></span>
+    &nbsp;
+  </button>
+  <button class="btn btn-link btn-nav pull-right">
+    &nbsp;
+    <span class="icon icon-right-nav"></span>
+  </button>    
+  <a class="title" href="#">    
+  Week <b>3</b> of 7
+  </a>
+</span>
     </header>
-    <div class="bar bar-standard bar-header-secondary">
+    <!--<div class="bar bar-standard bar-header-secondary">
         <input class='search-key' type="search"/>
-    </div>    
-    <div class="content"></div>
+    </div>-->
+    <div class="content">   
+    </div>
+<nav class="bar bar-tab">
+  <a class="tab-item active" href="#">
+    <span class="icon icon-person"></span>
+    <span class="tab-label">My lent</span>
+  </a>
+  <a class="tab-item" href="#addmycross">
+    <span class="icon icon-plus"></span>
+    <span class="tab-label">Add my cross</span>
+  </a>  
+  <a class="tab-item" href="#">
+    <span class="icon icon-star-filled"></span>
+    <span class="tab-label">My class</span>
+  </a>
+</nav>    
+
+</script>
+
+<script id="crosses-tpl" type="text/template">
+  <header class="bar bar-nav">
+    <h1 class="title">Lenten crosses</h1>
+  </header>
+  <div class="content">
+    <p class="content-padded">By selecting a cross, you mark it as done</p>
+<ul class="table-view">
+<li class="table-view-cell media">
+    <p class="pull-left">
+      <img class="media-object-cross" src="http://placehold.it/80x80"><br/>    
+      <a href="#"><span class="badge badge-positive" style="width: 120px;"><span class="icon icon-check"></span>I did it</a>
+      </p>            
+      <div class="media-body" style="padding-left: 10px">        
+        Item 1        
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+      </div>                
+</li>  
+
+</ul>  
+  </div>
+<nav class="bar bar-tab">
+  <a class="tab-item active" href="#crosses_close">
+    <span class="icon icon-close"></span>
+    <span class="tab-label">Cancel</span>
+  </a>
+</nav>  
 </script>
 
 <script id="employee-list-tpl" type="text/template">
@@ -114,6 +169,7 @@
 <script src="js/EmployeeListView.js"></script>
 <script src="js/HomeView.js"></script>
 <script src="js/EmployeeView.js"></script>
+<script src="js/CrossesView.js"></script>
 <script src="js/AppState.js"></script>
 <script src="js/app.js"></script>
 

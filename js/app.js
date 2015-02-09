@@ -5,6 +5,7 @@
     HomeView.prototype.template = Handlebars.compile($("#home-tpl").html());
     EmployeeListView.prototype.template = Handlebars.compile($("#employee-list-tpl").html());
     EmployeeView.prototype.template = Handlebars.compile($("#employee-tpl").html());
+    CrossesView.prototype.template = Handlebars.compile($("#crosses-tpl").html());
 
     var voteService = new VoteService();
     var service = new EmployeeService();    
@@ -26,6 +27,16 @@
                 slider.slidePage(new HomeView(service).render().$el);
             });
 
+            router.addRoute('addmycross', function() {
+                console.log('addmycross');
+                slider.slidePage(new CrossesView().render().$el);
+            });
+            
+            router.addRoute('crosses_close', function() {
+                console.log('crosses_close');
+                slider.slidePage(new HomeView(service).render().$el);
+            });
+            
             router.addRoute('employees/:id', function(id) {
                 slider.slidePage(makeEmployeeView(id).render().$el);
             });

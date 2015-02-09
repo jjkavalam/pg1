@@ -27,6 +27,12 @@ ul {
     border-radius: 25px;
 }
 
+.media-object-cross {
+    width: 120px;
+    height: 80px;
+}
+
+
 .icon-call {
     background: transparent url(images/ic_action_phone_outgoing.png);
     background-repeat: no-repeat;
