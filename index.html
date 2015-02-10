@@ -10,152 +10,94 @@
 </head>
 <body>
 
-<script id="home-tpl" type="text/template">
-  <header class="bar bar-nav">
-  <button class="btn btn-link btn-nav pull-left">
-    <span class="icon icon-left-nav"></span>
-    &nbsp;
-  </button>
-  <button class="btn btn-link btn-nav pull-right">
-    &nbsp;
-    <span class="icon icon-right-nav"></span>
-  </button>    
-  <a class="title" href="#">    
-  Week <b>3</b> of 7
-  </a>
-</span>
+<script id="mylent-tpl" type="text/template">
+    <header class="bar bar-nav">
+        {{#if isDisplayPrevWeekButton}}
+        <a href="#mylent/{{ weekNumber }}-1/left">
+        <button class="btn btn-link btn-nav pull-left">
+            <span class="icon icon-left-nav"></span>&nbsp;
+        </button>
+        </a>
+        {{/if}}
+        {{#if isDisplayNextWeekButton}}        
+        <a href="#mylent/{{ weekNumber }}+1/right">
+        <button class="btn btn-link btn-nav pull-right">
+            &nbsp;<span class="icon icon-right-nav"></span>
+        </button>    
+        </a>
+        {{/if}}
+        <a class="title" href="#">    
+            Week <b>{{ weekNumber }}</b> of 7
+        </a>
     </header>
     <!--<div class="bar bar-standard bar-header-secondary">
         <input class='search-key' type="search"/>
     </div>-->
     <div class="content">   
+        <ul class="table-view">       
+            {{#each cards}}
+            <li class="table-view-cell media">
+                <a>
+                    <img class="media-object pull-left" src="assets/pics/crosses/{{cross_pic}}">
+                    <div class="media-body {{style_class}}">
+                        {{userName}} is {{virtue}}
+                    </div>
+                </a>
+            </li>
+            {{/each}}   
+            {{#if isDisplayTodaysCross}}
+            <li class="table-view-cell">
+                <a href="#addmycross">
+                What are you doing today ?
+                </a>
+            </li>        
+            {{/if}}            
+        </ul>        
     </div>
-<nav class="bar bar-tab">
-  <a class="tab-item active" href="#">
-    <span class="icon icon-person"></span>
-    <span class="tab-label">My lent</span>
-  </a>
-  <a class="tab-item" href="#addmycross">
-    <span class="icon icon-plus"></span>
-    <span class="tab-label">Add my cross</span>
-  </a>  
-  <a class="tab-item" href="#">
-    <span class="icon icon-star-filled"></span>
-    <span class="tab-label">My class</span>
-  </a>
-</nav>    
-
+    <nav class="bar bar-tab">
+        <a class="tab-item active" href="#">
+            <span class="icon icon-person"></span>
+            <span class="tab-label">My lent</span>
+        </a>
+        <a class="tab-item" href="#addmycross">
+            <span class="icon icon-plus"></span>
+            <span class="tab-label">Add my cross</span>
+        </a>  
+        <a class="tab-item" href="#">
+            <span class="icon icon-star-filled"></span>
+            <span class="tab-label">My class</span>
+        </a>
+    </nav>    
 </script>
 
 <script id="crosses-tpl" type="text/template">
-  <header class="bar bar-nav">
-    <h1 class="title">Lenten crosses</h1>
-  </header>
-  <div class="content">
-    <p class="content-padded">By selecting a cross, you mark it as done</p>
-<ul class="table-view">
-<li class="table-view-cell media">
-    <p class="pull-left">
-      <img class="media-object-cross" src="http://placehold.it/80x80"><br/>    
-      <a href="#"><span class="badge badge-positive" style="width: 120px;"><span class="icon icon-check"></span>I did it</a>
-      </p>            
-      <div class="media-body" style="padding-left: 10px">        
-        Item 1        
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-      </div>                
-</li>  
-
-</ul>  
-  </div>
-<nav class="bar bar-tab">
-  <a class="tab-item active" href="#crosses_close">
-    <span class="icon icon-close"></span>
-    <span class="tab-label">Cancel</span>
-  </a>
-</nav>  
-</script>
-
-<script id="employee-list-tpl" type="text/template">
-    <ul class="table-view">
-        {{#each this}}
-        <li class="table-view-cell media">
-            <a href="#employees/{{ id }}">
-                <img class="media-object pull-left" src="assets/pics/{{pic}}">
-                <div class="media-body">
-                    {{firstName}} {{lastName}}
-                    <p>{{title}}</p>
-                </div>
-            </a>
-        </li>
-        {{/each}}
-    </ul>
-</script>
-
-<script id="employee-tpl" type="text/template">
     <header class="bar bar-nav">
-        <a class="btn btn-link btn-nav pull-left" href="#">
-            <span class="icon icon-left-nav"></span>
-        </a>
-        <h1 class="title">Employee</h1>
+        <h1 class="title">Lenten crosses</h1>
     </header>
     <div class="content">
-        <div class="card">
-            <ul class="table-view">
-                <li class="table-view-cell media">
-                    <!-- Bookmark for new vote feature -->                    
-                    <div class="media-body vote-text">
-                    Votes: {{ numvotes }} <br/>                    
-                    <a href="#upvote/{{ id }}/{{ numvotes }}">Up vote</a> | <a href="#downvote/{{ id }}/{{ numvotes }}">Down vote</a>
-                    </div>                    
-                </li>
-                <li class="table-view-cell media">
-                    <img class="media-object pull-left" src="assets/pics/{{pic}}">
-                    <div class="media-body">
-                        {{ firstName }} {{ lastName }}
-                        <p>{{ title }}</p>
-                    </div>
-                </li>
-                <li class="table-view-cell media">
-                    <a href="tel:{{ officePhone }}" class="push-right">
-                        <span class="media-object pull-left icon icon-call"></span>
-                        <div class="media-body">
-                            Call Office
-                            <p>{{ officePhone }}</p>
-                        </div>
-                    </a>
-                </li>
-                <li class="table-view-cell media">
-                    <a href="tel:{{ cellPhone }}" class="push-right">
-                        <span class="media-object pull-left icon icon-call"></span>
-                        <div class="media-body">
-                            Call Cell
-                            <p>{{ cellPhone }}</p>
-                        </div>
-                    </a>
-                </li>
-                <li class="table-view-cell media">
-                    <a href="sms:{{ cellPhone }}" class="push-right">
-                        <span class="media-object pull-left icon icon-sms"></span>
-                        <div class="media-body">
-                            SMS
-                            <p>{{ cellPhone }}</p>
-                        </div>
-                    </a>
-                </li>
-                <li class="table-view-cell media">
-                    <a href="mailto:{{ email }}" class="push-right">
-                        <span class="media-object pull-left icon icon-mail"></span>
-                        <div class="media-body">
-                            Email
-                            <p>{{ email }}</p>
-                        </div>
-                    </a>
-                </li>
+        <p class="content-padded">By selecting a cross, you mark it as done</p>
+        <ul class="table-view">
+            <li class="table-view-cell media">
+                <p class="pull-left">
+                  <img class="media-object-cross" src="http://placehold.it/80x80"><br/>    
+                  <a href="#"><span class="badge badge-positive" style="width: 120px;"><span class="icon icon-check"></span>I did it</a>
+                  </p>            
+                  <div class="media-body" style="padding-left: 10px">        
+                    Item 1        
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+                  </div>                
+            </li>  
 
-            </ul>
-        </div>
+        </ul>  
     </div>
+    <nav class="bar bar-tab">
+      <a class="tab-item active" href="#crosses_close">
+        <span class="icon icon-close"></span>
+        <span class="tab-label">Cancel</span>
+      </a>
+    </nav>  
 </script>
+
 
 <script src="cordova.js"></script>
 <script src="lib/fastclick.js"></script>
@@ -164,12 +106,15 @@
 <script src="lib/pageslider.js"></script>
 <script src="lib/router.js"></script>
 <script src="lib/animate.js"></script>
+<script src="js/services/UserService.js"></script>
 <script src="js/services/file/EmployeeService.js"></script>
 <script src="js/services/file/VoteService.js"></script>
+<script src="js/services/CardService.js"></script>
 <script src="js/EmployeeListView.js"></script>
 <script src="js/HomeView.js"></script>
 <script src="js/EmployeeView.js"></script>
 <script src="js/CrossesView.js"></script>
+<script src="js/MylentView.js"></script>
 <script src="js/AppState.js"></script>
 <script src="js/app.js"></script>
 

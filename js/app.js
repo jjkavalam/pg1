@@ -2,13 +2,12 @@
 (function () {
 
     /* ---------------------------------- Local Variables ---------------------------------- */
-    HomeView.prototype.template = Handlebars.compile($("#home-tpl").html());
-    EmployeeListView.prototype.template = Handlebars.compile($("#employee-list-tpl").html());
-    EmployeeView.prototype.template = Handlebars.compile($("#employee-tpl").html());
     CrossesView.prototype.template = Handlebars.compile($("#crosses-tpl").html());
-
+    
     var voteService = new VoteService();
     var service = new EmployeeService();    
+    var cardService = new CardService();
+    
     var slider = new PageSlider($('body'));
   
     var makeEmployeeView = function(id){
@@ -18,15 +17,38 @@
         if (numvotes == undefined) numvotes = 0;
         return new EmployeeView(employee, numvotes);                        
     };
-                    
+    
+    var LAST_WEEK = 6;
+    
+    var makeMylentView = function(week_n, isThisWeek){
+        console.log('makeMylentView'+week_n);
+    
+        var mylentView = new MylentView();
+        mylentView.isDisplayPrevWeekButton = (week_n > 0);
+        mylentView.isDisplayNextWeekButton = (week_n < LAST_WEEK);
+        mylentView.weekNumber = week_n+1;
+        mylentView.cards = cardService.getMylentCardsForWeek(week_n);
+        mylentView.isDisplayTodaysCross = isThisWeek;                
+        return mylentView;
+    }
+    
+    
     voteService.initialize().done(function(){
     
         service.initialize().done(function () {
             router.addRoute('', function() {
-                console.log('empty');
-                slider.slidePage(new HomeView(service).render().$el);
+                console.log('mylentview');
+                var mylentView = makeMylentView(5, true);
+                slider.slidePage(mylentView.render().$el);
             });
 
+            router.addRoute('mylent/:week_n/:direction', function(weekExpr, direction){
+                console.log('mylent');
+                var week_n = eval(weekExpr)-1;
+                var mylentView = makeMylentView(eval(week_n), true);
+                slider.slidePageFrom(mylentView.render().$el, direction);
+            });
+            
             router.addRoute('addmycross', function() {
                 console.log('addmycross');
                 slider.slidePage(new CrossesView().render().$el);

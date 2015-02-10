@@ -32,6 +32,6 @@
 }
 
 .page.transition {
-    -webkit-transition-duration: .25s;
-    transition-duration: .25s;
+    -webkit-transition-duration: .50s;
+    transition-duration: .50s;
 }

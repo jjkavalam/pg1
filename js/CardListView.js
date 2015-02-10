@@ -12,8 +12,8 @@ var CardListView = function () {
         this.render();
     }
 
-    this.render = function() {
-        this.$el.html(this.template(cards));
+    this.render = function(template) {
+        this.$el.html(template(cards));
         return this;
     };
 
