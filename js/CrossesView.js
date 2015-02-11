@@ -1,14 +1,13 @@
 var CrossesView = function() {
 
-    this.initialize = function() {
-        this.$el = $('<div/>');
-    };
-
+    var cards;
+    
     this.render = function() {
-        this.$el.html(this.template());
+        this.$el = $('<div/>');
+        this.$el.html(this.template(this));
         return this;
     };
-    
-    this.initialize();
 
 }
+
+CrossesView.prototype.template = Handlebars.compile($("#crosses-tpl").html());

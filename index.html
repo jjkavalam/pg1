@@ -13,14 +13,14 @@
 <script id="mylent-tpl" type="text/template">
     <header class="bar bar-nav">
         {{#if isDisplayPrevWeekButton}}
-        <a href="#mylent/{{ weekNumber }}-1/left">
+        <a href="#mylent/{{ weekNumber }}-1/slideFromLeft">
         <button class="btn btn-link btn-nav pull-left">
             <span class="icon icon-left-nav"></span>&nbsp;
         </button>
         </a>
         {{/if}}
         {{#if isDisplayNextWeekButton}}        
-        <a href="#mylent/{{ weekNumber }}+1/right">
+        <a href="#mylent/{{ weekNumber }}+1/slideFromRight">
         <button class="btn btn-link btn-nav pull-right">
             &nbsp;<span class="icon icon-right-nav"></span>
         </button>    
@@ -84,20 +84,22 @@
         <h1 class="title">Lenten crosses</h1>
     </header>
     <div class="content">
-        <p class="content-padded">By selecting a cross, you mark it as done</p>
+        <p class="content-padded">By selecting a cross, you mark it as done</p>        
         <ul class="table-view">
-            <li class="table-view-cell media">
+            {{#each cards}}
+            <li class="table-view-cell media {{style_class}} cross_{{cross_idx}}">
                 <p class="pull-left">
-                  <img class="media-object-cross" src="http://placehold.it/80x80"><br/>    
-                  <a href="#"><span class="badge badge-positive" style="width: 120px;"><span class="icon icon-check"></span>I did it</a>
-                  </p>            
-                  <div class="media-body" style="padding-left: 10px">        
-                    Item 1        
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-                  </div>                
+                  <img class="media-object-cross" src="assets/pics/crosses/{{pic}}"><br/>    
+                  <a href="#ididit/{{cross_idx}}"><span class="badge badge-positive" style="width: 120px;"><span class="icon icon-check"></span>I did it</a>
+                </p>            
+                <div class="media-body" style="padding-left: 10px">        
+                    {{ cross_heading }}        
+                    <p>{{ cross_text }}</p>
+                </div>                
             </li>  
-
+            {{/each}}   
         </ul>  
+        <br/><br/><br/><br/><br/>
     </div>
     <nav class="bar bar-tab">
       <a class="tab-item active" href="#crosses_close">

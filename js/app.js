@@ -47,44 +47,41 @@
                 console.log('mylentview');
                 var thisWeekN = userService.getWeekNOfToday();
                 var mylentView = makeMylentView(thisWeekN);
-                slider.slidePage(mylentView.render().$el);
+                slider.newPage(mylentView.render().$el);
             });
 
-            router.addRoute('mylent/:week_n/:direction', function(weekExpr, direction){
-                console.log('mylent');
+            router.addRoute('mylent/:week_n/:fx', function(weekExpr, transitionFx){
+                console.log('mylent'+transitionFx);
                 var week_n = eval(weekExpr)-1;
                 var mylentView = makeMylentView(eval(week_n));
-                slider.slidePageFrom(mylentView.render().$el, direction);
+                slider.newPage(mylentView.render().$el, transitionFx);
             });
             
             router.addRoute('addmycross', function() {
                 console.log('addmycross');
-                slider.slidePage(new CrossesView().render().$el);
+                var crossesView = new CrossesView();
+                crossesView.cards = cardService.getAddmycrossCards();
+                slider.newPage(crossesView.render().$el,"zoom");
             });
             
             router.addRoute('crosses_close', function() {
                 console.log('crosses_close');
-                slider.slidePage(new HomeView(service).render().$el);
+                slider.newPage(new HomeView(service).render().$el);
             });
             
             router.addRoute('employees/:id', function(id) {
-                slider.slidePage(makeEmployeeView(id).render().$el);
+                slider.newPage(makeEmployeeView(id).render().$el);
             });
 
-            router.addRoute('upvote/:id/:current_votes', function(id, current_votes) {
-                voteService.updateVotesOfId(id, parseInt(current_votes)+1);
-                Animate.prototype.animateNow($('.vote-text'),'flash').done(function(){
-                    slider.replaceCurrentPage(makeEmployeeView(id).render().$el);
+            router.addRoute('ididit/:cross_idx', function(cross_idx) {
+                //voteService.updateVotesOfId(id, parseInt(current_votes)+1);
+                cross_idx = parseInt(cross_idx);
+                //userService.registerTodaysCross(cross_idx);
+                Animate.prototype.animateNow($('.cross_'+cross_idx),'bounceIn').done(function(){
+                    //slider.replaceCurrentPage(makeEmployeeView(id).render().$el);
                 });                                
             });
-            
-            router.addRoute('downvote/:id/:current_votes', function(id, current_votes) {
-                voteService.updateVotesOfId(id, parseInt(current_votes)-1);
-                Animate.prototype.animateNow($('.vote-text'),'flash').done(function(){
-                    slider.replaceCurrentPage(makeEmployeeView(id).render().$el);
-                });                                            
-            });            
-            
+                        
             router.start();
         });
     

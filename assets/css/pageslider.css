@@ -31,6 +31,21 @@
     transform: translate3d(100%, 0, 0);
 }
 
+.page.zoomedOut {
+    -webkit-transform: scale(0.8, 0.8);
+    transform: scale(0.8, 0.8);
+}
+
+.page.zoomNormal {
+    -webkit-transform: scale(1.0, 1.0);
+    transform: scale(1.0, 1.0);
+}
+
+.page.zoomNormal2 {
+    -webkit-transform: scale(1.01, 1.01);
+    transform: scale(1.01, 1.01);
+}
+
 .page.transition {
     -webkit-transition-duration: .50s;
     transition-duration: .50s;
