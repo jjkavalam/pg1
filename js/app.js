@@ -7,6 +7,7 @@
     var voteService = new VoteService();
     var service = new EmployeeService();    
     var cardService = new CardService();
+    var userService = new UserService();
     
     var slider = new PageSlider($('body'));
   
@@ -20,15 +21,21 @@
     
     var LAST_WEEK = 6;
     
-    var makeMylentView = function(week_n, isThisWeek){
+    var makeMylentView = function(week_n){
         console.log('makeMylentView'+week_n);
+    
+        var weeknToday = userService.getWeekNOfToday();
+        var isTodayHasCross = userService.isTodayHasCross();
+        var isThisWeek = (weeknToday == week_n);       
     
         var mylentView = new MylentView();
         mylentView.isDisplayPrevWeekButton = (week_n > 0);
-        mylentView.isDisplayNextWeekButton = (week_n < LAST_WEEK);
+        mylentView.isDisplayNextWeekButton = (week_n < LAST_WEEK) && (week_n < weeknToday);
         mylentView.weekNumber = week_n+1;
         mylentView.cards = cardService.getMylentCardsForWeek(week_n);
-        mylentView.isDisplayTodaysCross = isThisWeek;                
+                
+        mylentView.isTodayHasCross = isTodayHasCross;
+        mylentView.isDisplayEncouragement = isThisWeek && !isTodayHasCross;
         return mylentView;
     }
     
@@ -38,14 +45,15 @@
         service.initialize().done(function () {
             router.addRoute('', function() {
                 console.log('mylentview');
-                var mylentView = makeMylentView(5, true);
+                var thisWeekN = userService.getWeekNOfToday();
+                var mylentView = makeMylentView(thisWeekN);
                 slider.slidePage(mylentView.render().$el);
             });
 
             router.addRoute('mylent/:week_n/:direction', function(weekExpr, direction){
                 console.log('mylent');
                 var week_n = eval(weekExpr)-1;
-                var mylentView = makeMylentView(eval(week_n), true);
+                var mylentView = makeMylentView(eval(week_n));
                 slider.slidePageFrom(mylentView.render().$el, direction);
             });
             

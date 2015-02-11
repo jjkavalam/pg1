@@ -26,43 +26,52 @@
         </button>    
         </a>
         {{/if}}
-        <a class="title" href="#">    
-            Week <b>{{ weekNumber }}</b> of 7
-        </a>
+        <h class="title">    
+            <a href="#">Week <b>{{ weekNumber }}</b> of 7</a>
+        </h>
     </header>
     <!--<div class="bar bar-standard bar-header-secondary">
         <input class='search-key' type="search"/>
     </div>-->
     <div class="content">   
-        <ul class="table-view">       
+            {{#if isDisplayEncouragement}}
+            <div style="text-align:center; font-size: 2.0em; line-height: 40px;">
+                <a href="#addmycross" >
+                What are you doing for Jesus today ?
+                </a>
+            </div>        
+            {{/if}}            
+        <ul class="table-view">               
             {{#each cards}}
-            <li class="table-view-cell media">
+            <li class="table-view-cell media {{style_class}}">
+                <div style="position: absolute; right:0; top: 0"><span class="badge badge-positive">Day {{ day_seq }}</span></div>
                 <a>
                     <img class="media-object pull-left" src="assets/pics/crosses/{{cross_pic}}">
-                    <div class="media-body {{style_class}}">
-                        {{userName}} is {{virtue}}
+                    <div>
+                        <span class="card_username">{{userName}}</span> is <span class="card_virtue">{{virtue}}</span>
                     </div>
                 </a>
             </li>
             {{/each}}   
-            {{#if isDisplayTodaysCross}}
-            <li class="table-view-cell">
-                <a href="#addmycross">
-                What are you doing today ?
-                </a>
-            </li>        
-            {{/if}}            
         </ul>        
+        <br/><br/><br/><br/><br/>
     </div>
     <nav class="bar bar-tab">
         <a class="tab-item active" href="#">
             <span class="icon icon-person"></span>
             <span class="tab-label">My lent</span>
         </a>
+        {{#if isTodayHasCross}}
+        <a class="tab-item">
+            <span class="icon icon-check" style="color: green"></span>
+            <span class="tab-label">Today's cross added</span>
+        </a>          
+        {{else}}        
         <a class="tab-item" href="#addmycross">
             <span class="icon icon-plus"></span>
             <span class="tab-label">Add my cross</span>
         </a>  
+        {{/if}}
         <a class="tab-item" href="#">
             <span class="icon icon-star-filled"></span>
             <span class="tab-label">My class</span>

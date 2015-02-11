@@ -67,3 +67,31 @@ ul {
     background: transparent url(images/ic_action_location.png);
     background-repeat: no-repeat;
 }
+
+/* Card styles */
+.mylent_content_style_1 {
+    background-image: url("../pics/cardstyles/parchment.png");
+    background-repeat: round;
+}
+.mylent_content_style_1 .card_username {
+    color: black;
+    font-size: 1em;
+}
+.mylent_content_style_1 .card_virtue {
+    color: red;
+    font-size: 2em;
+}
+
+.mylent_content_style_2 {
+    background-image: url("../pics/cardstyles/parchment.png");
+    background-repeat: round;
+    background-size: cover;
+}
+.mylent_content_style_2 .card_username {
+    color: black;
+    font-size: 1em;
+}
+.mylent_content_style_2 .card_virtue {
+    color: blue;
+    font-size: 2em;
+}

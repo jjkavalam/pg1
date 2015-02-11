@@ -4,7 +4,8 @@
     var isDisplayNextWeekButton;
     var weekNumber;
     var cards;
-    var isDisplayTodaysCross;
+    var isDisplayEncouragement;
+    var isTodayHasCross;
     
     this.render = function() {
         this.$el = $('<div/>');

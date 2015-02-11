@@ -11,23 +11,7 @@ var CardService = function(){
             {"pic":"cross1.png", "virtue":"kind"},
             {"pic":"cross2.png", "virtue":"humble"}
         ],
-        "start_date" : new Date('2/18/2015'),
-    }
-    
-    this.getDaysOfWeek = function(week_n){
-        if (week_n == 0){
-            return [0, 1, 2, 3];
-        }
-        if (week_n == 6)
-            return [39, 40];            
-        if (week_n > 6) return;
-        var start = 7*week_n - 3;
-        var days = new Array();
-        for (var i = 0; i < 7; i++){
-            days.push(start+i);
-        }
-        return days;
-    }
+    }    
     
     this.initialize = function() {
     }
@@ -37,11 +21,13 @@ var CardService = function(){
         var crossesByDay = userService.getCrossesByDay();
         
         // Filter out cross status data for the given week
-        var daysOfWeek = this.getDaysOfWeek(week_n);
+        var daysOfWeek = userService.getDaysOfWeek(week_n);
         var crossesOfWeek = new Array();
+        var day_seq = new Array();
         for (var i = 0; i < daysOfWeek.length; i++){
             var day = daysOfWeek[i];
             crossesOfWeek.push(crossesByDay[day]);
+            day_seq.push(day+1);
         }
         
         // Prepare cards for days with cross
@@ -53,6 +39,7 @@ var CardService = function(){
                 var crossId = crossesOfWeek[i];
                 card.cross_pic = static_data["crosses"][crossId]["pic"];
                 card.virtue = static_data["crosses"][crossId]["virtue"];
+                card.day_seq = day_seq[i];
                 cards.push(card);
             }
         }
