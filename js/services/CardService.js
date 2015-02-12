@@ -4,8 +4,7 @@ var CardService = function(){
     
     var static_data = {
         "mylentcard_styles" : [
-            'mylent_content_style_1',
-            'mylent_content_style_2'
+            'mylent_content_style_1'
         ],
         "crosses" : [
             {"pic":"red", "virtue":"kind", "cross_heading":"Green cross", "cross_text":"I said an extra prayer."},

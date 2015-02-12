@@ -100,3 +100,25 @@ ul {
 .cross_pic .svg_path_cross {
     fill: red;
 }
+
+.mylent_content_style_1_userName{
+    font-family: cursive; 
+    font-size: 1.2em;
+}
+.mylent_content_style_1_is  {
+    font-family: cursive;
+}
+.mylent_content_style_1_virtue {
+    font-family: fantasy; 
+    font-size: 2em; 
+    display:inline-block; 
+    transform: translateY(+30%);    
+}
+.mylent_content_style_1_box {
+    margin:5px; 
+    border: 1px solid black !important; 
+    border-radius: 10px; 
+    background-image:url('../pics/cardstyles/flowers_1.svg'); 
+    background-repeat: no-repeat; 
+    background-size: cover;
+}

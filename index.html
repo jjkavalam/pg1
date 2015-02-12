@@ -41,21 +41,19 @@
                 </a>
             </div>        
             {{/if}}            
-        <ul class="table-view">               
+        <ul class="table-view">                           
             {{#each cards}}
-            <li class="table-view-cell media {{style_class}}">
+            <li class="table-view-cell media {{style_class}}_box" >
                 <div style="position: absolute; right:0; top: 0"><span class="badge badge-positive">Day {{ day_seq }}</span></div>
-                <a>                
-                    <!--<img class="media-object pull-left" src="assets/pics/crosses/{{cross_pic}}">-->
-                    <!--<object type="image/svg+xml" class="media-object pull-left cross_pic" data="assets/pics/cross_black.svg" ></object>-->
-                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="404" height="564" class="media-object pull-left" viewBox="0 0 404 564">
-                        <path transform="translate(2,2)scale(2,2)" fill="{{cross_pic}}" d="M0,80H80V0H120V80H200V120H120V280H80V120H0V80Z"/>
-                    </svg>
-                    <div>
-                        <span class="card_username">{{userName}}</span> is <span class="card_virtue">{{virtue}}</span>
-                    </div>
-                </a>
-            </li>
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="404" height="564" class="media-object pull-left" viewBox="0 0 404 564">
+                    <path transform="translate(2,2)scale(2,2)" fill="{{cross_pic}}" d="M0,80H80V0H120V80H200V120H120V280H80V120H0V80Z"/>
+                </svg>
+                <div>
+                <span class="{{style_class}}_userName" >{{userName}}</span>
+                <span class="{{style_class}}_is" > is </span>
+                <span class="{{style_class}}_virtue" style="color: {{cross_pic}}">{{virtue}}</span>
+                </div>
+            </li>            
             {{/each}}   
         </ul>        
         <br/><br/><br/><br/><br/>
