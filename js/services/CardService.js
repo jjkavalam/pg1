@@ -8,8 +8,8 @@ var CardService = function(){
             'mylent_content_style_2'
         ],
         "crosses" : [
-            {"pic":"cross1.png", "virtue":"kind", "cross_heading":"Green cross", "cross_text":"I said an extra prayer."},
-            {"pic":"cross2.png", "virtue":"humble", "cross_heading":"Red cross", "cross_text":"I did something good that was hard for me to do."}
+            {"pic":"red", "virtue":"kind", "cross_heading":"Green cross", "cross_text":"I said an extra prayer."},
+            {"pic":"blue", "virtue":"humble", "cross_heading":"Red cross", "cross_text":"I did something good that was hard for me to do."}
         ],
     }    
     

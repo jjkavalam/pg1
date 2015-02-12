@@ -95,3 +95,8 @@ ul {
     color: blue;
     font-size: 2em;
 }
+
+/* Cross */
+.cross_pic .svg_path_cross {
+    fill: red;
+}
