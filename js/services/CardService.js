@@ -15,6 +15,10 @@ var CardService = function(){
     this.initialize = function() {
     }
     
+    this.getThankyouMessage = function(){
+         
+    }
+    
     this.getMylentCardsForWeek = function(week_n){
     
         var crossesByDay = userService.getCrossesByDay();

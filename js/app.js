@@ -67,19 +67,30 @@
             router.addRoute('crosses_close', function() {
                 console.log('crosses_close');
                 slider.newPage(new HomeView(service).render().$el);
-            });
-            
-            router.addRoute('employees/:id', function(id) {
-                slider.newPage(makeEmployeeView(id).render().$el);
-            });
+            });            
 
             router.addRoute('ididit/:cross_idx', function(cross_idx) {
-                //voteService.updateVotesOfId(id, parseInt(current_votes)+1);
                 cross_idx = parseInt(cross_idx);
+                
                 //userService.registerTodaysCross(cross_idx);
-                Animate.prototype.animateNow($('.cross_'+cross_idx),'bounceIn').done(function(){
-                    //slider.replaceCurrentPage(makeEmployeeView(id).render().$el);
-                });                                
+                var cloudsView = new CloudsView();
+                cloudsView.message = cardService.getThankyouMessage();
+                var $el = cloudsView.render().$el;
+                
+                $('.nummycrosses', $el).html('42');
+                $('.numclasscrosses', $el).html('120');
+                
+                $('.sun',$el).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){                    
+                    Animate.prototype.animateNow($('.numcrosses', $el),'bounceIn').done(function(){
+                        $('.nummycrosses', $el).html('43');
+                        $('.numclasscrosses', $el).html('121');
+                    });                    
+                });
+                
+
+                
+                slider.newPage($el, "zoom");
+                //
             });
                         
             router.start();
