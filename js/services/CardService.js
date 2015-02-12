@@ -72,10 +72,18 @@ var CardService = function(){
             cards[i].cross_idx = i;
         }
         
+        
+        var crossesCountByType = userService.getCrossesCountByType();
+        console.log(crossesCountByType);
+        for (var i = 0; i < cards.length; i++){
+            cards[i].crosses_so_far = crossesCountByType[i] ? crossesCountByType[i] : 0;
+        }        
+        
         // Apply random styles to the card        
         for (var i = 0; i < cards.length; i++){
             cards[i].style_class = getRandomStyle();
         }
+        
         
         return cards
     }

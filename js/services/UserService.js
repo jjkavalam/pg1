@@ -90,6 +90,21 @@ var UserService = function(){
         return (this.getCrossesByDay()[day_seq] != undefined);
     }
     
+    this.getCrossesCountByType = function(){
+        var crossesByDay = this.getCrossesByDay();
+        var crossesCount = {};
+        for (var i = 0; i < crossesByDay.length; i++){
+            var cross = crossesByDay[i];
+            if (cross != undefined){
+                if(crossesCount[cross]){
+                    crossesCount[cross]++;
+                } else {
+                    crossesCount[cross]=1;
+                }
+            }
+        }
+        return crossesCount;
+    }
     this.getCrossesByDay = function(){
         return UserService.prototype.crossesByDay;
     }  

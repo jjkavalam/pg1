@@ -45,14 +45,23 @@
             {{#each cards}}
             <li class="table-view-cell media {{style_class}}_box" >
                 <div style="position: absolute; right:0; top: 0"><span class="badge badge-positive">Day {{ day_seq }}</span></div>
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="404" height="564" class="media-object pull-left" viewBox="0 0 404 564">
-                    <path transform="translate(2,2)scale(2,2)" fill="{{cross_pic}}" d="M0,80H80V0H120V80H200V120H120V280H80V120H0V80Z"/>
-                </svg>
-                <div>
-                <span class="{{style_class}}_userName" >{{userName}}</span>
-                <span class="{{style_class}}_is" > is </span>
-                <span class="{{style_class}}_virtue" style="color: {{cross_pic}}">{{virtue}}</span>
-                </div>
+                <ul class="table-view">
+                    <li class="pull-left" style="width: 20%">
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                        viewBox="0 0 404 564"
+                        style="max-height: 100px;"
+                        >
+                            <path transform="translate(2,2)scale(2,2)" fill="{{cross_pic}}" d="M0,80H80V0H120V80H200V120H120V280H80V120H0V80Z"/>
+                        </svg>                    
+                    </li>
+                    <li class="pull-left" style="width: 70%; padding: 5px;">
+                        <div>
+                        <span class="{{style_class}}_userName" >{{userName}}</span>
+                        <span class="{{style_class}}_is" > is </span>
+                        <span class="{{style_class}}_virtue" style="color: {{cross_pic}}">{{virtue}}</span>
+                        </div>                    
+                    </li>
+                </ul>
             </li>            
             {{/each}}   
         </ul>        
@@ -74,7 +83,7 @@
             <span class="tab-label">Add my cross</span>
         </a>  
         {{/if}}
-        <a class="tab-item" href="#">
+        <a class="tab-item" href="docs/cloud/cloudAnimation.html">
             <span class="icon icon-star-filled"></span>
             <span class="tab-label">My class</span>
         </a>
@@ -89,15 +98,30 @@
         <p class="content-padded">By selecting a cross, you mark it as done</p>        
         <ul class="table-view">
             {{#each cards}}
-            <li class="table-view-cell media {{style_class}} cross_{{cross_idx}}">
-                <p class="pull-left">
-                  <img class="media-object-cross" src="assets/pics/crosses/{{pic}}"><br/>    
-                  <a href="#ididit/{{cross_idx}}"><span class="badge badge-positive" style="width: 120px;"><span class="icon icon-check"></span>I did it</a>
-                </p>            
-                <div class="media-body" style="padding-left: 10px">        
-                    {{ cross_heading }}        
-                    <p>{{ cross_text }}</p>
-                </div>                
+            <li class="table-view-cell media simple_box">
+                <div style="position: absolute; right:2px; top: 2px"><span class="badge">{{ crosses_so_far }} so far</span></div>
+                <ul class="table-view">
+                    <li class="pull-left" style="width: 20%;">
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                        viewBox="0 0 404 564"
+                        style="max-height: 100px;"
+                        >
+                            <path transform="translate(2,2)scale(2,2)" fill="{{pic}}" d="M0,80H80V0H120V80H200V120H120V280H80V120H0V80Z"/>
+                        </svg>                    
+                    </li>
+                    <li class="pull-left" style="width: 70%; padding: 5px;">
+                        <ul class="table-view">
+                        <li><span style="color: {{pic}}">{{ cross_heading }}</span><br/>
+                        {{ cross_text }}
+                        <br/>
+                        </li>
+                        <li>
+                        <a href="#ididit/{{cross_idx}}"><span class="badge badge-positive" style="border-radius: 2px;">
+                        <span class="icon icon-check"></span>I did it</span></a>                                       
+                        </li>
+                        </ul>                    
+                    </li>
+                </ul>
             </li>  
             {{/each}}   
         </ul>  
