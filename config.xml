@@ -12,7 +12,15 @@
     <description>
         An example for phonegap
     </description>
+    
+    <gap:plugin name="org.apache.cordova.device" />
+    <gap:plugin name="org.apache.cordova.file" />
 
+    <feature name="debug-server" required="true">
+        <param name="domain" value="http://localhost:8080"/>
+        <param name="key" value="app"/>
+    </feature>
+  
     <author href="http://ccoenraets.github.io/cordova-tutorial/setup-files.html" email="">
         ccoenraets
     </author>
