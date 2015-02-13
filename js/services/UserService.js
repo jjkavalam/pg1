@@ -58,7 +58,6 @@ var UserService = function(){
                 );
             t = new Date(t.getTime()+86400000);
         }
-        console.log(cal);
         return cal;
     }
     

@@ -1,6 +1,8 @@
 // We use an "Immediate Function" to initialize the application to avoid leaving anything behind in the global scope
 (function () {
 
+    /* Debug */
+    
     /* ---------------------------------- Local Variables ---------------------------------- */
     CrossesView.prototype.template = Handlebars.compile($("#crosses-tpl").html());
     
@@ -72,6 +74,31 @@
             router.addRoute('ididit/:cross_idx', function(cross_idx) {
                 cross_idx = parseInt(cross_idx);
                 
+                                
+                var write = function(){
+                    DataService.prototype.updateUserData({'cross':cross_idx}).then(
+                        function(){
+                            console.log('Write done');
+                        },
+                        function(){
+                            console.log('Write failed');
+                        }                    
+                    );
+                };
+                
+                DataService.prototype.getUserData().then(
+                    function(contents){
+                        console.log('Read done');
+                        console.log(contents);
+                        console.log('Writing');
+                        write();
+                    },
+                    function(){
+                        console.log('Read failed');
+                    }                
+                );
+                
+
                 //userService.registerTodaysCross(cross_idx);
                 var cloudsView = new CloudsView();
                 cloudsView.message = cardService.getThankyouMessage();
@@ -114,10 +141,12 @@
                 );
             };
         }
+        
+        console.log(cordova.file.dataDirectory);
+        DataService.prototype.initialize();
                         
     }, false);
-    $(document).ready(function(){
-                //
+    $(document).ready(function(){        
     });
     /* ---------------------------------- Local Functions ---------------------------------- */
 
