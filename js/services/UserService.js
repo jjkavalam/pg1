@@ -2,7 +2,7 @@ var UserService = function(){
 
     var start_time = new Date("Feb 18 2015 00:00:00");
     var end_time = new Date("Apr 4 2015 23:59:59"); 
-    
+
     this.getToday = function(){
         return new Date("3/19/2015");
     }    
@@ -42,6 +42,25 @@ var UserService = function(){
         return false;
     }
     */
+    
+    this.getCalendarOfLent = function(){
+        // 46 days starting from start date till end date
+        var cal = new Array();
+        var t = start_time;        
+        for (var i = 0; i < 46; i++){
+            var date = t.getDate()+"";
+            date = date.length == 1 ? "0"+date : date;
+            cal.push(
+                {
+                    cal_day : UserService.prototype.cal_days[t.getDay()],
+                    cal_date : date + " " + UserService.prototype.cal_months[t.getMonth()],
+                }
+                );
+            t = new Date(t.getTime()+86400000);
+        }
+        console.log(cal);
+        return cal;
+    }
     
     this.getDaysOfWeek = function(week_n){
         if (week_n == 0){
@@ -112,6 +131,8 @@ var UserService = function(){
 }
 
 UserService.prototype.crossesByDay;
+UserService.prototype.cal_days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+UserService.prototype.cal_months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 (function(){
     var oneOrZero = function(){

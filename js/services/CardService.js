@@ -30,8 +30,10 @@ var CardService = function(){
         for (var i = 0; i < daysOfWeek.length; i++){
             var day = daysOfWeek[i];
             crossesOfWeek.push(crossesByDay[day]);
-            day_seq.push(day+1);
+            day_seq.push(day+1);            
         }
+        
+        var lentCalendar = userService.getCalendarOfLent();
         
         // Prepare cards for days with cross
         var cards = new Array();
@@ -43,6 +45,9 @@ var CardService = function(){
                 card.cross_pic = static_data["crosses"][crossId]["pic"];
                 card.virtue = static_data["crosses"][crossId]["virtue"];
                 card.day_seq = day_seq[i];
+                var cal = lentCalendar[day_seq[i]-1];
+                card.cal_date = cal.cal_date;
+                card.cal_day = cal.cal_day;
                 cards.push(card);
             }
         }

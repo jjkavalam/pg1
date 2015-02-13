@@ -82,8 +82,16 @@
             {{/if}}            
         <ul class="table-view">                           
             {{#each cards}}
-            <li class="table-view-cell media {{style_class}}_box" >
-                <div style="position: absolute; right:0; top: 0"><span class="badge badge-positive">Day {{ day_seq }}</span></div>
+            <li class="table-view-cell media {{style_class}}_box">
+                <div style="position: absolute; right:0; top: 0; height: 100%;">
+                <span style="visibility: hidden; font-size: 1.5em;">23 Feb</span>                
+                <div style="border: 1px solid lightgray; position: absolute; top: 50%; transform: translateY(-50%); right:0; border-radius: 5px; text-align: center; margin-right:4px; opacity: 0.8; ">
+                    <div style="background: lightgray; color: black; font-size: 0.8em;">&nbsp;Day {{ day_seq }}&nbsp;</div>
+                    <div style="background: white; color: red; font-size: 1.2em; font-family: fantasy; line-height: 150%;">&nbsp;{{ cal_date }}&nbsp;</div>
+                    <div style="background: lightgray; color: black; font-size: 0.8em;">&nbsp;{{ cal_day }}&nbsp;</div>
+                </div>
+                
+                </div>
                 <ul class="table-view">
                     <li class="pull-left" style="width: 20%">
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
