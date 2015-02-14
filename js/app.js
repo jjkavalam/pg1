@@ -54,13 +54,7 @@
         service.initialize().done(function () {
             router.addRoute('', function() {
                 // very first time show splash screen
-                if (firstLoad){
-                    // Show splash screen 
-                    slider.newPage(new SplashScreenView().render().$el);    
-                    firstLoad = false;
-                } else {
-                    gotoHomeScreen();
-                }
+                gotoHomeScreen();
             });
 
             router.addRoute('mylent/:week_n/:fx', function(weekExpr, transitionFx){
@@ -165,9 +159,7 @@
         );
                         
     }, false);
-    $(document).ready(function(){        
-
-    
+    $(document).ready(function(){            
     });
     /* ---------------------------------- Local Functions ---------------------------------- */
 

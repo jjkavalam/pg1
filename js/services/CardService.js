@@ -16,7 +16,7 @@ var CardService = function(){
     }
     
     this.getThankyouMessage = function(){
-         
+        return "Thank you for making the world  a better place";
     }
     
     this.getMylentCardsForWeek = function(week_n){
