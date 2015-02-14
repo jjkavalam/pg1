@@ -7,10 +7,10 @@
 
     <!-- versionCode is optional and Android only -->
 
-    <name>PhoneGap Tutorial</name>
+    <name>40 Days Of Lent</name>
 
     <description>
-        An example for phonegap
+        A good deed everyday.
     </description>
     
     <gap:plugin name="org.apache.cordova.device" />
