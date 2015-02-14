@@ -38,14 +38,11 @@ DataService.prototype.initializeOnStartUp = function(){
                     // setTimeouts
                     setInterval(DataService.prototype.getContentData, 12*1000);
                     setInterval(function(){
-                        DataService.prototype.getUserData().then(
+                        DataService.prototype.getUserData().done(
                             function(){
                                 console.log('Check if the data has changed');
                                 console.log(DataService.prototype.userData);
-                            },
-                            function(){
-                                deferred.reject();
-                            }                            
+                            }
                         );
                     }, 4*1000);
                     deferred.resolve();

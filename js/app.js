@@ -166,16 +166,7 @@
                         
     }, false);
     $(document).ready(function(){        
-        DataService.prototype.initializeOnStartUp().then(
-            function(){
-                gotoHomeScreen();
-                console.log('Data service successfully initialized. Remove splash screen. Goto home screen');
-            },
-            function(){
-                alert('Failed');
-                console.log('Data service successfully initialized. Show failure error.');
-            }
-        );
+
     
     });
     /* ---------------------------------- Local Functions ---------------------------------- */
