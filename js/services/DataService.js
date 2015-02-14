@@ -1,158 +1,140 @@
-var DataService = function(){        
-
-}
-DataService.prototype.FilesystemErrorHandler = function(e) {
-  var msg = '';
-  console.log(e);
-  switch (e.code) {
-    case FileError.QUOTA_EXCEEDED_ERR:
-      msg = 'QUOTA_EXCEEDED_ERR';
-      break;
-    case FileError.NOT_FOUND_ERR:
-      msg = 'NOT_FOUND_ERR';
-      break;
-    case FileError.SECURITY_ERR:
-      msg = 'SECURITY_ERR';
-      break;
-    case FileError.INVALID_MODIFICATION_ERR:
-      msg = 'INVALID_MODIFICATION_ERR';
-      break;
-    case FileError.INVALID_STATE_ERR:
-      msg = 'INVALID_STATE_ERR';
-      break;
-    default:
-      msg = 'Unknown Error';
-      break;
-  };
-  console.log('File system error :'+msg);
-}
-
-
-    DataService.prototype.initialize = function(){
-        // get the file system object and keep
-        window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;        
+var DataService = function(){
+    // Get content and user data from the web on load
+    // Show loader till initialize is complete
         
-        if (window.requestFileSystem) {
-          window.requestFileSystem(window.PERSISTENT, 1024*1024, function(filesystem) {DataService.prototype.fs = filesystem;}, DataService.prototype.FilesystemErrorHandler); 
-          }
-        }
+    // Perform periodic updates of cotent (5 min)
+    // User data (5s)    
+    // download and update no matter what
     
-    DataService.prototype.updateUserData = function(userdata){
-        var deferred = $.Deferred();
+    // trigger newcross event if requried
+    
+    // update user data upon 'I did this'
+    
+    // when fail to contact server
+    // -- if its on startup fail the app
+    // -- 'I did this' : complete server transaction before showing victory screen, show 'try again' message if failed
+    // -- All other times, simply ignore (but show a warning notification)
+    
+    // employees = JSON.parse(window.localStorage.getItem("employees"));
+    // window.localStorage.setItem("employees", JSON.stringify(employees));    
+    
+}
 
-        userdata = JSON.stringify(userdata);
+DataService.prototype.onlineStatusCallback = function(isOnline){
+    console.log('Online status :'+isOnline);
+};
+
+DataService.prototype.userData;
+DataService.prototype.contentData;
+
+// done or reject
+DataService.prototype.initializeOnStartUp = function(){
+    var deferred = $.Deferred();
+    // load data and setTimeout for periodic updates
+    DataService.prototype.getUserData().then(
+        function(){
+            DataService.prototype.getContentData().then(
+                function(){
+                    // setTimeouts
+                    setInterval(DataService.prototype.getContentData, 12*1000);
+                    setInterval(function(){
+                        DataService.prototype.getUserData().then(
+                            function(){
+                                console.log('Check if the data has changed');
+                                console.log(DataService.prototype.userData);
+                            },
+                            function(){
+                                deferred.reject();
+                            }                            
+                        );
+                    }, 4*1000);
+                    deferred.resolve();
+                },
+                function(){
+                    deferred.reject();
+                }
+            );
+        },        
+        function(){
+            deferred.reject();
+        }
+    );
+
+    console.log('Initializing ...');
+    return deferred.promise();
+    
+}
+
+DataService.prototype.getUserData = function(){
+    var deferred = $.Deferred();
         
-        DataService.prototype.writeFile(DataService.prototype.fs, 'userdata', userdata).then(
-            function(){
+    $.ajax({
+            url: "http://www.rediscoverkerala.com/lent/userData.php",
+            success: function(data, type){
+                console.log(data);
+                DataService.prototype.userData = data;
+                DataService.prototype.onlineStatusCallback(true);
+                console.log('userdata refreshed');
                 deferred.resolve();
             },
-            function(error){
-                console.log('updateUserData filed');
+            error: function(xhr,status,error){
+                console.log("[ERROR] User data Request failed");
+                DataService.prototype.onlineStatusCallback(false);
+                console.log(xhr);
+                console.log(status);
                 console.log(error);
                 deferred.reject();
             }
-        );
+    });
         
-        return deferred.promise();        
-    }
-    
-    DataService.prototype.updateContent = function(content){
-    }
-    
-    DataService.prototype.getUserData = function(){
-        var deferred = $.Deferred();
-        console.log(DataService.prototype.fs);
-        DataService.prototype.readFile(DataService.prototype.fs, 'userdata', false).then(
-            function(contents){
-                deferred.resolve(JSON.parse(contents));
+    return deferred.promise();
+}
+DataService.prototype.getContentData = function(){
+    var deferred = $.Deferred();
+        
+    $.ajax({
+            url: "http://www.rediscoverkerala.com/lent/contentData.php",
+            success: function(data, type){
+                console.log(data);
+                DataService.prototype.contentData = data;
+                DataService.prototype.onlineStatusCallback(true);
+                console.log('content data refreshed');
+                deferred.resolve();
             },
-            function(error){
-                console.log('getUserData failed');
+            error: function(xhr,status,error){
+                console.log("[ERROR] Content data Request failed");
+                DataService.prototype.onlineStatusCallback(false);
+                console.log(xhr);
+                console.log(status);
                 console.log(error);
                 deferred.reject();
-            }        
-        );        
-        return deferred.promise();                
-    }
-    DataService.prototype.getContent = function(){
-    }
-    
-DataService.prototype.fs;
-
-//   Wait for device API libraries to load
-DataService.prototype.readFile = function(fs, filename, asDataUrl){
-    var deferred = $.Deferred();
-    fs.root.getFile(
-        cordova.file.dataDirectory+filename, 
-        {create: true, exclusive: false}, 
-        function(fileEntry){
-            fileEntry.file(
-                function(file){
-                
-                    var readDataUrl = function(file) {
-                        var reader = new FileReader();
-                        reader.onloadend = function(evt) {
-                            return evt.target.result;
-                        };
-                        reader.readAsDataURL(file);
-                    }
-
-                    var readAsText = function(file) {
-                        var reader = new FileReader();
-                        reader.onloadend = function(evt) {
-                            return evt.target.result;
-                        };
-                        reader.readAsText(file);
-                    }
-                
-                    var contents;
-                    if (asDataUrl == undefined || asDataUrl == false){
-                        contents = readAsText(file);
-                    } else {
-                        contents = readDataUrl(file);
-                    }
-                    deferred.resolve(contents);
-                }, 
-                function(error){
-                    console.log('****');
-                    deferred.reject(error);
-                }
-            );
-        }, 
-        function(error){
-            console.log('$$$$$$');
-            deferred.reject(error);
-        }
-    );        
+            }
+    });
+        
     return deferred.promise();
 }
 
-DataService.prototype.writeFile = function(fs, filename, contents){
+DataService.prototype.updateUserData = function(){
     var deferred = $.Deferred();
-    fs.root.getFile(
-        cordova.file.dataDirectory+filename, 
-        {create: true, exclusive: false}, 
-        function(fileEntry){
-            fileEntry.createWriter(
-                function(writer){
-                    writer.onwriteend = function(evt) {
-                        writer.write(contents);
-                        writer.onwriteend = function(evt) {
-                            deferred.resolve();
-                        };
-                    };
-                    writer.truncate(0);                                            
-                },
-                function(error){
-                    deferred.reject(error);
-                }                
-            );
-        }, 
-        function(error){
-            deferred.reject(error);
-        }
-    );        
-    
-    return deferred.promise();    
-}
+        
+    $.ajax({
+            url: "http://www.rediscoverkerala.com/lent/updateUserData.php",
+            data: JSON.stringify(DataService.prototype.userData),
+            success: function(){
+                DataService.prototype.onlineStatusCallback(true);
+                console.log('updateUserData completed with success');
+                deferred.resolve();
+            },
+            error: function(xhr,status,error){
+                console.log("[ERROR] User data update failed");
+                DataService.prototype.onlineStatusCallback(false);
+                console.log(xhr);
+                console.log(status);
+                console.log(error);
+                deferred.reject();
+            }
+    });
+        
+    return deferred.promise();
 
+}

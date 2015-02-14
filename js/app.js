@@ -41,15 +41,26 @@
         return mylentView;
     }
     
+    var gotoHomeScreen = function(){
+        var thisWeekN = userService.getWeekNOfToday();
+        var mylentView = makeMylentView(thisWeekN);
+        slider.newPage(mylentView.render().$el);    
+    };
+    
+    var firstLoad = true;
     
     voteService.initialize().done(function(){
     
         service.initialize().done(function () {
             router.addRoute('', function() {
-                console.log('mylentview');
-                var thisWeekN = userService.getWeekNOfToday();
-                var mylentView = makeMylentView(thisWeekN);
-                slider.newPage(mylentView.render().$el);
+                // very first time show splash screen
+                if (firstLoad){
+                    // Show splash screen 
+                    slider.newPage(new SplashScreenView().render().$el);    
+                    firstLoad = false;
+                } else {
+                    gotoHomeScreen();
+                }
             });
 
             router.addRoute('mylent/:week_n/:fx', function(weekExpr, transitionFx){
@@ -136,17 +147,36 @@
                 navigator.notification.alert(
                     message,    // message
                     null,       // callback
-                    "Workshop", // title
+                    "Lent", // title
                     'OK'        // buttonName
                 );
             };
         }
-        
-        console.log(cordova.file.dataDirectory);
-        DataService.prototype.initialize();
+                
+        DataService.prototype.initializeOnStartUp().then(
+            function(){
+                gotoHomeScreen();
+                console.log('Data service successfully initialized. Remove splash screen. Goto home screen');
+            },
+            function(){
+                alert('Failed');
+                console.log('Data service successfully initialized. Show failure error.');
+            }
+        );
                         
     }, false);
     $(document).ready(function(){        
+        DataService.prototype.initializeOnStartUp().then(
+            function(){
+                gotoHomeScreen();
+                console.log('Data service successfully initialized. Remove splash screen. Goto home screen');
+            },
+            function(){
+                alert('Failed');
+                console.log('Data service successfully initialized. Show failure error.');
+            }
+        );
+    
     });
     /* ---------------------------------- Local Functions ---------------------------------- */
 
