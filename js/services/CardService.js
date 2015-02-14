@@ -2,15 +2,7 @@ var CardService = function(){
 
     var userService = new UserService();
     
-    var static_data = {
-        "mylentcard_styles" : [
-            'mylent_content_style_1'
-        ],
-        "crosses" : [
-            {"pic":"red", "virtue":"kind", "cross_heading":"Green cross", "cross_text":"I said an extra prayer."},
-            {"pic":"blue", "virtue":"humble", "cross_heading":"Red cross", "cross_text":"I did something good that was hard for me to do."}
-        ],
-    }    
+    DataService.prototype.contentData;
     
     this.initialize = function() {
     }
@@ -42,8 +34,8 @@ var CardService = function(){
             } else {
                 var card = {};
                 var crossId = crossesOfWeek[i];
-                card.cross_pic = static_data["crosses"][crossId]["pic"];
-                card.virtue = static_data["crosses"][crossId]["virtue"];
+                card.cross_pic = DataService.prototype.contentData["crosses"][crossId]["pic"];
+                card.virtue = DataService.prototype.contentData["crosses"][crossId]["virtue"];
                 card.day_seq = day_seq[i];
                 var cal = lentCalendar[day_seq[i]-1];
                 card.cal_date = cal.cal_date;
@@ -68,13 +60,13 @@ var CardService = function(){
     }
     
     var getRandomStyle = function(){
-        var rnd = Math.floor((Math.random() * static_data["mylentcard_styles"].length));    
-        return static_data["mylentcard_styles"][rnd];
+        var rnd = Math.floor((Math.random() * DataService.prototype.contentData["mylentcard_styles"].length));    
+        return DataService.prototype.contentData["mylentcard_styles"][rnd];
     }
     
     this.getAddmycrossCards = function(){
         // Simply return the static content dictionary
-        var cards = static_data["crosses"];
+        var cards = DataService.prototype.contentData["crosses"];
         
         // Add index as the cross idx
         for (var i = 0; i < cards.length; i++){

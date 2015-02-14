@@ -87,13 +87,18 @@
                 
                                 
                 var write = function(){
-                    DataService.prototype.updateUserData({'cross':cross_idx}).then(
+                
+                    UserService.prototype.deviceID;
+                    UserService.prototype.crossesByDay;
+                    UserService.prototype.userClassID;
+                    
+                    DataService.prototype.updateUserData().then(
                         function(){
                             console.log('Write done');
                         },
                         function(){
                             console.log('Write failed');
-                        }                    
+                        }
                     );
                 };
                 
@@ -166,6 +171,16 @@
                         
     }, false);
     $(document).ready(function(){        
+        DataService.prototype.initializeOnStartUp().then(
+            function(){
+                gotoHomeScreen();
+                console.log('Data service successfully initialized. Remove splash screen. Goto home screen');
+            },
+            function(){
+                alert('Failed');
+                console.log('Data service successfully initialized. Show failure error.');
+            }
+        );
 
     
     });

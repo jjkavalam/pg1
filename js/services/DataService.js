@@ -24,8 +24,16 @@ DataService.prototype.onlineStatusCallback = function(isOnline){
     console.log('Online status :'+isOnline);
 };
 
-DataService.prototype.userData;
-DataService.prototype.contentData;
+DataService.prototype.userData = { 'crossesByDay' : [], 'deviceID' : undefined, 'classID': undefined };
+DataService.prototype.contentData = {
+    "mylentcard_styles" : [
+        'mylent_content_style_1'
+    ],
+    "crosses" : [
+        {"pic":"red", "virtue":"kind", "cross_heading":"Green cross", "cross_text":"I said an extra prayer."},
+        {"pic":"blue", "virtue":"humble", "cross_heading":"Red cross", "cross_text":"I did something good that was hard for me to do."}
+    ],
+}
 
 // done or reject
 DataService.prototype.initializeOnStartUp = function(){

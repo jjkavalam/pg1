@@ -1,3 +1,25 @@
+DB Design
+---------
+One table  : uuid - class - day_seq - cross - isHeader
+
+Methods
+    getClassList (classID) --> "select unique(class) from table"  
+    Alphabetically sorted list of unique classes in the table
+    
+    addUserToClass (uuid, class) --> 
+        insert into table (uuid, class, isHeader) values (?, ?, 1)
+        
+    getUserData (uuid) --> 
+        classID: "select class from table where uuid=? AND isHeader=1"
+        crosses: "select day_seq, cross from table where uuid=? AND isHeader=0"
+        --> Convert this to a Array inserting undefines where necessary       
+
+    putCross (uuid, class, dayseq, cross) -->
+        "insert into table (uuid, class, dayseq, cross, isHeader) values (?, ?, ?, ?, 0)"
+
+    getCrossCount (class) -->
+        "select count(*) from table where class=? and isHeader=0"
+        
 Story board 
 -----------
 Scene 1

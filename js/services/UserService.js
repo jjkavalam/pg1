@@ -124,16 +124,21 @@ var UserService = function(){
         return crossesCount;
     }
     this.getCrossesByDay = function(){
-        return UserService.prototype.crossesByDay;
+        return DataService.prototype.userData['crossesByDay'];
     }  
     
 }
 
-UserService.prototype.crossesByDay;
+DataService.prototype.userData['crossesByDay'];
+DataService.prototype.userData['deviceID'];
+DataService.prototype.userData['classID'];
+
 UserService.prototype.cal_days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 UserService.prototype.cal_months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 (function(){
+    console.log('Remove this return statement to automatically generate the cross array for test');
+    return;
     var oneOrZero = function(){
         if (Math.random() < 0.5){
             return 0;
@@ -142,16 +147,16 @@ UserService.prototype.cal_months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'J
         }
     }
 
-    UserService.prototype.crossesByDay = new Array(46);
+    DataService.prototype.userData['crossesByDay'] = new Array(46);
     for (var i = 0; i < 46; i++){
         var oneOrTwo = Math.floor((Math.random() * 2) + 1);
         if (oneOrTwo == 1){
-            UserService.prototype.crossesByDay[i] = undefined;
+            DataService.prototype.userData['crossesByDay'][i] = undefined;
         } else {
-            UserService.prototype.crossesByDay[i] = Math.floor((Math.random() * 2) + 1) - 1;
+            DataService.prototype.userData['crossesByDay'][i] = Math.floor((Math.random() * 2) + 1) - 1;
         }
     }
     console.log('Initialized crossesByDay');
-    console.log(UserService.prototype.crossesByDay);
+    console.log(DataService.prototype.userData['crossesByDay']);
     
 })();
