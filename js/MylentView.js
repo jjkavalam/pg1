@@ -1,5 +1,6 @@
  var MylentView = function () {
 
+    var isOnline;
     var isDisplayPrevWeekButton;
     var isDisplayNextWeekButton;
     var weekNumber;

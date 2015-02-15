@@ -30,8 +30,7 @@ var CardService = function(){
         // Prepare cards for days with cross
         var cards = new Array();
         for (var i = 0; i < daysOfWeek.length; i++){
-            if (crossesOfWeek[i] == null){
-            } else {
+            if (crossesOfWeek[i] != -1){
                 var card = {};
                 var crossId = crossesOfWeek[i];
                 card.cross_pic = DataService.prototype.contentData["crosses"][crossId]["pic"];

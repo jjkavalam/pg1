@@ -105,7 +105,7 @@ var UserService = function(){
     
     this.isTodayHasCross = function(){
         var day_seq = this.getDaySeqOfToday();
-        return (this.getCrossesByDay()[day_seq] != undefined);
+        return (this.getCrossesByDay()[day_seq] != -1);
     }
     
     this.getCrossesCountByType = function(){
@@ -113,7 +113,7 @@ var UserService = function(){
         var crossesCount = {};
         for (var i = 0; i < crossesByDay.length; i++){
             var cross = crossesByDay[i];
-            if (cross != undefined){
+            if (cross != -1){
                 if(crossesCount[cross]){
                     crossesCount[cross]++;
                 } else {
@@ -151,7 +151,7 @@ UserService.prototype.cal_months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'J
     for (var i = 0; i < 46; i++){
         var oneOrTwo = Math.floor((Math.random() * 2) + 1);
         if (oneOrTwo == 1){
-            DataService.prototype.userData['crossesByDay'][i] = undefined;
+            DataService.prototype.userData['crossesByDay'][i] = -1;
         } else {
             DataService.prototype.userData['crossesByDay'][i] = Math.floor((Math.random() * 2) + 1) - 1;
         }

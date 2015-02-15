@@ -134,9 +134,14 @@
             <span class="icon icon-star-filled"></span>
             <span class="tab-label">My class</span>
         </a>
-        <a class="tab-item onlinestatusIndicator" style="color:red;">
-            <span class="icon icon-info"></span>
-            <span class="tab-label onlinestatusIndicatorText">Offline</span>
+        <a class="tab-item onlinestatusIndicator">
+        {{#if isOnline}}
+            <span class="icon icon-info" style="color: green"></span>
+            <span class="tab-label" style="color: green">Online</span>            
+        {{else}}            
+            <span class="icon icon-info" style="color: red"></span>
+            <span class="tab-label" style="color: red">Offline</span>                        
+        {{/if}}        
         </a>        
     </nav>    
 </script>

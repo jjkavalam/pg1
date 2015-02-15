@@ -19,12 +19,25 @@ var DataService = function(){
     // window.localStorage.setItem("employees", JSON.stringify(employees));    
     
 }
-
+DataService.prototype.isOnline;
 DataService.prototype.onlineStatusCallback = function(isOnline){
-    console.log('Online status :'+isOnline);
+    if (isOnline != DataService.prototype.isOnline){
+        console.log('online status changed to '+isOnline);
+    }
+    DataService.prototype.isOnline = isOnline;
+    if (isOnline){
+        $('.tab-label','.onlinestatusIndicator').html('Online').css('color','green');
+        $('.icon','.onlinestatusIndicator').css('color','green');
+    } else {
+        $('.tab-label','.onlinestatusIndicator').html('Offline').css('color','red');
+        $('.icon','.onlinestatusIndicator').css('color','red');   
+    }
+    
 };
 
-DataService.prototype.userData = { 'crossesByDay' : [], 'deviceID' : undefined, 'classID': undefined };
+DataService.prototype.uid = undefined;
+DataService.prototype.userData = { 'crossesByDay' : undefined, 'communitycode': undefined, 'communitycount': undefined, 'lastCommunitycount': undefined };
+
 DataService.prototype.contentData = {
     "mylentcard_styles" : [
         'mylent_content_style_1'
@@ -36,20 +49,26 @@ DataService.prototype.contentData = {
 }
 
 // done or reject
-DataService.prototype.initializeOnStartUp = function(){
-    var deferred = $.Deferred();
+DataService.prototype.initializeOnStartUp = function(uid){
+    var deferred = $.Deferred();    
+    
+    DataService.prototype.uid = 1; // device.uuid
+    
     // load data and setTimeout for periodic updates
     DataService.prototype.getUserData().then(
         function(){
             DataService.prototype.getContentData().then(
                 function(){
                     // setTimeouts
-                    setInterval(DataService.prototype.getContentData, 12*1000);
+                    setInterval(DataService.prototype.getContentData, 60*1000);
                     setInterval(function(){
-                        DataService.prototype.getUserData().done(
+                        DataService.prototype.getCommunityCount().done(
                             function(){
-                                console.log('Check if the data has changed');
-                                console.log(DataService.prototype.userData);
+                                if (DataService.prototype.userData['lastCommunitycount'] != DataService.prototype.userData['communitycount']){
+                                    console.log('Community count has changed !!');
+                                    DataService.prototype.userData['lastCommunitycount'] = DataService.prototype.userData['communitycount'];
+                                    $(document).trigger("custom_event_community_count",[DataService.prototype.userData['communitycount']]);
+                                }                                
                             }
                         );
                     }, 4*1000);
@@ -70,16 +89,45 @@ DataService.prototype.initializeOnStartUp = function(){
     
 }
 
+DataService.prototype.getCommunityCount = function(){
+    var deferred = $.Deferred();
+    var communitycode = DataService.prototype.userData['communitycode'];
+    
+    $.ajax({
+            url: "http://www.rediscoverkerala.com/lent/app.php?method=getCommunityCrossCount&communitycode="+communitycode,
+            success: function(data, type){
+                DataService.prototype.userData['communitycount'] = data['count'];
+                DataService.prototype.onlineStatusCallback(true);
+                deferred.resolve();
+            },
+            error: function(xhr,status,error){
+                console.log("[ERROR] User data Request failed");
+                DataService.prototype.onlineStatusCallback(false);
+                console.log(xhr);
+                console.log(status);
+                console.log(error);
+                deferred.reject();
+            }
+    });
+        
+    return deferred.promise();
+    
+}
+
 DataService.prototype.getUserData = function(){
     var deferred = $.Deferred();
-        
+
+    var uid = DataService.prototype.uid;
+    
     $.ajax({
-            url: "http://www.rediscoverkerala.com/lent/userData.php",
+            url: "http://www.rediscoverkerala.com/lent/app.php?method=getUserData&uid="+uid,
             success: function(data, type){
                 console.log(data);
-                DataService.prototype.userData = data;
+                DataService.prototype.userData['crossesByDay'] = data['crossesByDay'];
+                DataService.prototype.userData['communitycode'] = data['communitycode'];
+                DataService.prototype.userData['communitycount'] = data['communitycount'];
                 DataService.prototype.onlineStatusCallback(true);
-                console.log('userdata refreshed');
+                console.log('Userdata loaded.');
                 deferred.resolve();
             },
             error: function(xhr,status,error){
@@ -103,7 +151,7 @@ DataService.prototype.getContentData = function(){
                 console.log(data);
                 DataService.prototype.contentData = data;
                 DataService.prototype.onlineStatusCallback(true);
-                console.log('content data refreshed');
+                console.log('Content data loaded');
                 deferred.resolve();
             },
             error: function(xhr,status,error){
@@ -119,15 +167,19 @@ DataService.prototype.getContentData = function(){
     return deferred.promise();
 }
 
-DataService.prototype.updateUserData = function(){
+DataService.prototype.putCross = function(dayseq, crossid){
     var deferred = $.Deferred();
-        
+
+    var uid = DataService.prototype.uid;
+    
     $.ajax({
-            url: "http://www.rediscoverkerala.com/lent/updateUserData.php",
-            data: JSON.stringify(DataService.prototype.userData),
-            success: function(){
+            url: "http://www.rediscoverkerala.com/lent/app.php?method=putCross&uid="+uid+"&dayseq="+dayseq+"&crossid="+crossid,
+            success: function(result){
+                console.log(result);
+                console.log('updateUserData completed with success');                
+                // Update local data also
+                DataService.prototype.userData['crossesByDay'][dayseq] = crossid;
                 DataService.prototype.onlineStatusCallback(true);
-                console.log('updateUserData completed with success');
                 deferred.resolve();
             },
             error: function(xhr,status,error){

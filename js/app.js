@@ -35,7 +35,8 @@
         mylentView.isDisplayNextWeekButton = (week_n < LAST_WEEK) && (week_n < weeknToday);
         mylentView.weekNumber = week_n+1;
         mylentView.cards = cardService.getMylentCardsForWeek(week_n);
-                
+
+        mylentView.isOnline = DataService.prototype.isOnline;
         mylentView.isTodayHasCross = isTodayHasCross;
         mylentView.isDisplayEncouragement = isThisWeek && !isTodayHasCross;
         return mylentView;
@@ -85,55 +86,31 @@
             router.addRoute('ididit/:cross_idx', function(cross_idx) {
                 cross_idx = parseInt(cross_idx);
                 
-                                
-                var write = function(){
-                
-                    UserService.prototype.deviceID;
-                    UserService.prototype.crossesByDay;
-                    UserService.prototype.userClassID;
-                    
-                    DataService.prototype.updateUserData().then(
-                        function(){
-                            console.log('Write done');
-                        },
-                        function(){
-                            console.log('Write failed');
-                        }
-                    );
-                };
-                
-                DataService.prototype.getUserData().then(
-                    function(contents){
-                        console.log('Read done');
-                        console.log(contents);
-                        console.log('Writing');
-                        write();
+                DataService.prototype.putCross(userService.getDaySeqOfToday(), cross_idx).then(
+                    function(){
+                        
+                        var cloudsView = new CloudsView();
+                        cloudsView.message = cardService.getThankyouMessage();
+                        var $el = cloudsView.render().$el;
+                        
+                        $('.nummycrosses', $el).html('42');
+                        $('.numclasscrosses', $el).html('120');
+                        
+                        $('.sun',$el).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){                    
+                            Animate.prototype.animateNow($('.numcrosses', $el),'bounceIn').done(function(){
+                                $('.nummycrosses', $el).html('43');
+                                $('.numclasscrosses', $el).html('121');
+                            });                    
+                        });
+                        
+                        slider.newPage($el, "zoom");
+                        
                     },
                     function(){
-                        console.log('Read failed');
-                    }                
+                        alert('Failed');
+                    }
                 );
-                
 
-                //userService.registerTodaysCross(cross_idx);
-                var cloudsView = new CloudsView();
-                cloudsView.message = cardService.getThankyouMessage();
-                var $el = cloudsView.render().$el;
-                
-                $('.nummycrosses', $el).html('42');
-                $('.numclasscrosses', $el).html('120');
-                
-                $('.sun',$el).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){                    
-                    Animate.prototype.animateNow($('.numcrosses', $el),'bounceIn').done(function(){
-                        $('.nummycrosses', $el).html('43');
-                        $('.numclasscrosses', $el).html('121');
-                    });                    
-                });
-                
-
-                
-                slider.newPage($el, "zoom");
-                //
             });
                         
             router.start();
@@ -158,7 +135,8 @@
             };
         }
                 
-        DataService.prototype.initializeOnStartUp().then(
+        var uid = device.uuid;
+        DataService.prototype.initializeOnStartUp(uid).then(
             function(){
                 gotoHomeScreen();
                 console.log('Data service successfully initialized. Remove splash screen. Goto home screen');
@@ -181,8 +159,10 @@
                 console.log('Data service successfully initialized. Show failure error.');
             }
         );
-
-    
+        
+    });
+    $(document).on("custom_event_community_count", function(){
+        console.log('Event received');
     });
     /* ---------------------------------- Local Functions ---------------------------------- */
 
