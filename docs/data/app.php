@@ -58,7 +58,7 @@
         
         // fill the array with -1 if there is no cross
         for ($dayseq = 0; $dayseq < 46; $dayseq++){
-            if (empty($crosses[$dayseq])){
+			if(!array_key_exists($dayseq, $crosses)){
                 $crosses[$dayseq] = -1;
             }
         }

@@ -123,6 +123,19 @@ var UserService = function(){
         }
         return crossesCount;
     }
+    this.getCrossCountUser = function(){
+        var crossesByDay = this.getCrossesByDay();
+        var crossesCount = 0;
+        for (var i = 0; i < crossesByDay.length; i++){
+            if (crossesByDay[i] != -1){
+                crossesCount++;
+            }
+        }
+        return crossesCount;    
+    }
+    this.getCommunityCount = function(){
+        return DataService.prototype.userData['communitycount'];
+    }
     this.getCrossesByDay = function(){
         return DataService.prototype.userData['crossesByDay'];
     }  

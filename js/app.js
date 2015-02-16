@@ -48,76 +48,120 @@
         slider.newPage(mylentView.render().$el);    
     };
     
-    var firstLoad = true;
+    var networkError = function(){
+        alert('Err: Please ensure you are online and try again.');
+    }
     
-    voteService.initialize().done(function(){
-    
-        service.initialize().done(function () {
-            router.addRoute('', function() {
-                // very first time show splash screen
-                if (firstLoad){
-                    // Show splash screen 
-                    slider.newPage(new SplashScreenView().render().$el);    
-                    firstLoad = false;
-                } else {
-                    gotoHomeScreen();
-                }
-            });
-
-            router.addRoute('mylent/:week_n/:fx', function(weekExpr, transitionFx){
-                console.log('mylent'+transitionFx);
-                var week_n = eval(weekExpr)-1;
-                var mylentView = makeMylentView(eval(week_n));
-                slider.newPage(mylentView.render().$el, transitionFx);
-            });
-            
-            router.addRoute('addmycross', function() {
-                console.log('addmycross');
-                var crossesView = new CrossesView();
-                crossesView.cards = cardService.getAddmycrossCards();
-                slider.newPage(crossesView.render().$el,"zoom");
-            });
-            
-            router.addRoute('crosses_close', function() {
-                console.log('crosses_close');
-                slider.newPage(new HomeView(service).render().$el);
-            });            
-
-            router.addRoute('ididit/:cross_idx', function(cross_idx) {
-                cross_idx = parseInt(cross_idx);
-                
-                DataService.prototype.putCross(userService.getDaySeqOfToday(), cross_idx).then(
-                    function(){
-                        
-                        var cloudsView = new CloudsView();
-                        cloudsView.message = cardService.getThankyouMessage();
-                        var $el = cloudsView.render().$el;
-                        
-                        $('.nummycrosses', $el).html('42');
-                        $('.numclasscrosses', $el).html('120');
-                        
-                        $('.sun',$el).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){                    
-                            Animate.prototype.animateNow($('.numcrosses', $el),'bounceIn').done(function(){
-                                $('.nummycrosses', $el).html('43');
-                                $('.numclasscrosses', $el).html('121');
-                            });                    
-                        });
-                        
-                        slider.newPage($el, "zoom");
-                        
-                    },
-                    function(){
-                        alert('Failed');
-                    }
-                );
-
-            });
-                        
-            router.start();
+    var thisPartOfInitWorksOnThePCAlso = function(){
+        
+        var firstLoad = true;        
+        router.addRoute('', function() {
+            // very first time show splash screen
+            if (firstLoad){
+                // Show splash screen 
+                slider.newPage(new SplashScreenView().render().$el);    
+                firstLoad = false;
+            } else {
+                DataService.prototype.getUserData();
+                gotoHomeScreen();
+            }
         });
-    
-    });
 
+        router.addRoute('mylent/:week_n/:fx', function(weekExpr, transitionFx){
+            console.log('mylent'+transitionFx);
+            var week_n = eval(weekExpr)-1;
+            var mylentView = makeMylentView(eval(week_n));
+            slider.newPage(mylentView.render().$el, transitionFx);
+        });
+        
+        router.addRoute('addmycross', function() {
+            console.log('addmycross');
+            var crossesView = new CrossesView();
+            crossesView.cards = cardService.getAddmycrossCards();
+            slider.newPage(crossesView.render().$el,"zoom");
+        });
+        
+        router.addRoute('crosses_close', function() {
+            console.log('crosses_close');
+            slider.newPage(new HomeView(service).render().$el);
+        });            
+
+        router.addRoute('ididit/:cross_idx', function(cross_idx) {
+            cross_idx = parseInt(cross_idx);
+                                
+            DataService.prototype.putCross(userService.getDaySeqOfToday(), cross_idx).then(
+                function(){
+                    DataService.prototype.getUserData().then(
+                        function(){
+                            console.log('Userdata after put cross');
+                            console.log(DataService.prototype.userData);
+                            var cloudsView = new CloudsView();
+                            cloudsView.message = cardService.getThankyouMessage();
+                            var $el = cloudsView.render().$el;
+                            
+                            var userCrossCount = userService.getCrossCountUser();
+                            var communityCrossCount = userService.getCommunityCount();
+                            
+                            $('.nummycrosses', $el).html(userCrossCount-1);
+                            $('.numclasscrosses', $el).html(communityCrossCount-1);
+                            
+                            $('.sun',$el).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){                    
+                                    $('.nummycrosses', $el).html(userCrossCount);                                            
+                                    $('.numclasscrosses', $el).html(communityCrossCount);
+                            
+                                Animate.prototype.animateNow($('.numcrosses', $el),'bounceIn').done(function(){
+                                    $('.bar','.page').css('visibility','visible');
+                                });
+                            });
+                            
+                            slider.newPage($el, "zoom");
+                            
+                        },
+                        networkError
+                    );
+                },
+                networkError
+            );
+
+        });
+                    
+        router.start();
+                
+        // Test the local notification
+        window.plugin.notification.local.add({
+            id:         1,
+            message:    'I love BlackBerry!',
+            json:       JSON.stringify({ test: 123 })
+        });
+
+        window.plugin.notification.local.onclick = function (id, state, json) {
+            console.log(id +","+ json);
+            alert(id +","+ json);
+        }
+        
+        // TODO: For debug only
+        DataService.prototype.uid = 1; // device.uuid
+        
+        // First check if user exist
+        DataService.prototype.isUserExist().then(
+            function(isExist){
+                if (!isExist){
+                    // continue
+                } else {
+                    DataService.prototype.initializeOnStartUp().then(
+                        function(){
+                            gotoHomeScreen();
+                        },
+                        networkError
+                    );        
+                }
+            },
+            networkError
+        );
+        
+
+    }
+    
     /* --------------------------------- Event Registration -------------------------------- */
     document.addEventListener('deviceready', function () {
         StatusBar.overlaysWebView( false );
@@ -134,33 +178,16 @@
                 );
             };
         }
-                
-        var uid = device.uuid;
-        DataService.prototype.initializeOnStartUp(uid).then(
-            function(){
-                gotoHomeScreen();
-                console.log('Data service successfully initialized. Remove splash screen. Goto home screen');
-            },
-            function(){
-                alert('Failed');
-                console.log('Data service successfully initialized. Show failure error.');
-            }
-        );
-                        
-    }, false);
-    $(document).ready(function(){        
-        DataService.prototype.initializeOnStartUp().then(
-            function(){
-                gotoHomeScreen();
-                console.log('Data service successfully initialized. Remove splash screen. Goto home screen');
-            },
-            function(){
-                alert('Failed');
-                console.log('Data service successfully initialized. Show failure error.');
-            }
-        );
         
+        var uid = device.uuid;
+        thisPartOfInitWorksOnThePCAlso();
+        
+    }, false);
+    
+    $(document).ready(function(){        
+        thisPartOfInitWorksOnThePCAlso();
     });
+    
     $(document).on("custom_event_community_count", function(){
         console.log('Event received');
     });

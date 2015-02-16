@@ -12,41 +12,47 @@
 <body>
 
 <script id="clouds-tpl" type="text/template">
-<div class="content">
-    <div style="position: absolute; left:0; top: 0; width: 100%; height: 100%; background-image: url(assets/pics/clouds/pasture.svg); background-repeat: no-repeat; background-size: cover;"/>
-    <div style="width: 100%; height: 100%; overflow: hidden; position: relative;">
-        <img src="assets/pics/clouds/sun.svg" class="sun"/>
-        <img src="assets/pics/clouds/cloud.svg" class="cloud1" />
-        <img src="assets/pics/clouds/cloud.svg" class="cloud2" />
-        <div class="cloud_text" style="text-align: center;">
-        
-        <span style="color: black; font-size: 1.1em;">
-            {{ message }}            
-        </span>
-        
-        <br/><br/><br/>
-        <span class="badge badge-positive" style="font-size: 1.0em; transform: translateY(-50%)">Crosses earned so far</span>
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-                viewBox="0 0 404 564"
-                style="max-height: 100px; width: 32px; height: 32px;"                
-                >
-                <path transform="translate(2,2)scale(2,2)" fill="white" d="M0,80H80V0H120V80H200V120H120V280H80V120H0V80Z"/>
-        </svg>
-        <span class="numcrosses nummycrosses" style="font-family: fantasy; font-size: 2em; color: red;"></span> 
+    <div class="content">
+        <div style="position: absolute; left:0; top: 0; width: 100%; height: 100%; background-image: url(assets/pics/clouds/pasture.svg); background-repeat: no-repeat; background-size: cover;"/>
+        <div style="width: 100%; height: 100%; overflow: hidden; position: relative;">
+            <img src="assets/pics/clouds/sun.svg" class="sun"/>
+            <img src="assets/pics/clouds/cloud.svg" class="cloud1" />
+            <img src="assets/pics/clouds/cloud.svg" class="cloud2" />
+            <div class="cloud_text" style="text-align: center;">
+            
+            <span style="color: black; font-size: 1.1em;">
+                {{ message }}            
+            </span>
+            
+            <br/><br/><br/>
+            <span class="badge badge-positive" style="font-size: 1.0em; transform: translateY(-50%)">Crosses earned so far</span>
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                    viewBox="0 0 404 564"
+                    style="max-height: 100px; width: 32px; height: 32px;"                
+                    >
+                    <path transform="translate(2,2)scale(2,2)" fill="white" d="M0,80H80V0H120V80H200V120H120V280H80V120H0V80Z"/>
+            </svg>
+            <span class="numcrosses nummycrosses" style="font-family: fantasy; font-size: 2em; color: red;"></span> 
 
-        <br/>
-        <span class="badge badge-positive" style="font-size: 1.0em; transform: translateY(-50%)">Class's total contribution</span>
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-                viewBox="0 0 404 564"
-                style="max-height: 100px; width: 32px; height: 32px;"                
-                >
-                <path transform="translate(2,2)scale(2,2)" fill="white" d="M0,80H80V0H120V80H200V120H120V280H80V120H0V80Z"/>
-        </svg>
-        <span class="numcrosses numclasscrosses" style="font-family: fantasy; font-size: 2em; color: blue;"></span> 
+            <br/>
+            <span class="badge badge-positive" style="font-size: 1.0em; transform: translateY(-50%)">Class's total contribution</span>
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                    viewBox="0 0 404 564"
+                    style="max-height: 100px; width: 32px; height: 32px;"                
+                    >
+                    <path transform="translate(2,2)scale(2,2)" fill="white" d="M0,80H80V0H120V80H200V120H120V280H80V120H0V80Z"/>
+            </svg>
+            <span class="numcrosses numclasscrosses" style="font-family: fantasy; font-size: 2em; color: blue;"></span> 
+            </div>
+
         </div>
-
     </div>
-</div>
+    <nav class="bar bar-tab" style="visibility: hidden;">
+      <a class="tab-item active" href="#">
+        <span class="icon icon-close"></span>
+        <span class="tab-label">Back</span>
+      </a>
+    </nav>  
 </script>
 
 <script id="mylent-tpl" type="text/template">
@@ -115,7 +121,7 @@
         <br/><br/><br/><br/><br/>
     </div>
     <nav class="bar bar-tab">
-        <a class="tab-item active" href="#">
+        <a class="tab-item active" href="">
             <span class="icon icon-person"></span>
             <span class="tab-label">My lent</span>
         </a>
@@ -130,10 +136,11 @@
             <span class="tab-label">Add my cross</span>
         </a>  
         {{/if}}
-        <a class="tab-item" href="docs/cloud/cloudAnimation.html">
-            <span class="icon icon-star-filled"></span>
-            <span class="tab-label">My class</span>
+        <a class="tab-item" href="#settings">
+            <span class="icon icon-gear"></span>
+            <span class="tab-label">Settings</span>
         </a>
+        <!--
         <a class="tab-item onlinestatusIndicator">
         {{#if isOnline}}
             <span class="icon icon-info" style="color: green"></span>
@@ -142,7 +149,8 @@
             <span class="icon icon-info" style="color: red"></span>
             <span class="tab-label" style="color: red">Offline</span>                        
         {{/if}}        
-        </a>        
+        </a>
+        -->
     </nav>    
 </script>
 

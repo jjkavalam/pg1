@@ -1,3 +1,23 @@
+Release v1.0 Final design
+-------------------------
+
+* Ask for name if user doesn't exist
+* Simply identify user using the device id
+* Have alarm set and provide settings to change the alarm time
+* Provide full sunday school wide count [Done]
+
+* No 'Community' functionality
+* No need to provide notification for the class
+* No Content data loaded - its static
+* Remove online status indicator
+
+ToDO
+----
+* No class code only pan commodity count Community related features
+* Ask for name if the device id is not already enrolled
+* Add local notification feature and provide dialog to set the alarm time
+
+
 DB Design
 ---------
 Three tables

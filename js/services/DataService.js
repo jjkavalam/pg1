@@ -35,9 +35,14 @@ DataService.prototype.onlineStatusCallback = function(isOnline){
     
 };
 
+// Set during initialization
 DataService.prototype.uid = undefined;
+
+// Pulled in by the service
+// The community code will be default
 DataService.prototype.userData = { 'crossesByDay' : undefined, 'communitycode': undefined, 'communitycount': undefined, 'lastCommunitycount': undefined };
 
+// Static
 DataService.prototype.contentData = {
     "mylentcard_styles" : [
         'mylent_content_style_1'
@@ -49,36 +54,13 @@ DataService.prototype.contentData = {
 }
 
 // done or reject
-DataService.prototype.initializeOnStartUp = function(uid){
-    var deferred = $.Deferred();    
+DataService.prototype.initializeOnStartUp = function(){
+    var deferred = $.Deferred();       
     
-    DataService.prototype.uid = 1; // device.uuid
-    
-    // load data and setTimeout for periodic updates
     DataService.prototype.getUserData().then(
         function(){
-            DataService.prototype.getContentData().then(
-                function(){
-                    // setTimeouts
-                    setInterval(DataService.prototype.getContentData, 60*1000);
-                    setInterval(function(){
-                        DataService.prototype.getCommunityCount().done(
-                            function(){
-                                if (DataService.prototype.userData['lastCommunitycount'] != DataService.prototype.userData['communitycount']){
-                                    console.log('Community count has changed !!');
-                                    DataService.prototype.userData['lastCommunitycount'] = DataService.prototype.userData['communitycount'];
-                                    $(document).trigger("custom_event_community_count",[DataService.prototype.userData['communitycount']]);
-                                }                                
-                            }
-                        );
-                    }, 4*1000);
-                    deferred.resolve();
-                },
-                function(){
-                    deferred.reject();
-                }
-            );
-        },        
+            deferred.resolve();        
+        },
         function(){
             deferred.reject();
         }
@@ -142,30 +124,6 @@ DataService.prototype.getUserData = function(){
         
     return deferred.promise();
 }
-DataService.prototype.getContentData = function(){
-    var deferred = $.Deferred();
-        
-    $.ajax({
-            url: "http://www.rediscoverkerala.com/lent/contentData.php",
-            success: function(data, type){
-                console.log(data);
-                DataService.prototype.contentData = data;
-                DataService.prototype.onlineStatusCallback(true);
-                console.log('Content data loaded');
-                deferred.resolve();
-            },
-            error: function(xhr,status,error){
-                console.log("[ERROR] Content data Request failed");
-                DataService.prototype.onlineStatusCallback(false);
-                console.log(xhr);
-                console.log(status);
-                console.log(error);
-                deferred.reject();
-            }
-    });
-        
-    return deferred.promise();
-}
 
 DataService.prototype.putCross = function(dayseq, crossid){
     var deferred = $.Deferred();
@@ -176,11 +134,39 @@ DataService.prototype.putCross = function(dayseq, crossid){
             url: "http://www.rediscoverkerala.com/lent/app.php?method=putCross&uid="+uid+"&dayseq="+dayseq+"&crossid="+crossid,
             success: function(result){
                 console.log(result);
-                console.log('updateUserData completed with success');                
+                console.log('updateUserData completed with success');
                 // Update local data also
                 DataService.prototype.userData['crossesByDay'][dayseq] = crossid;
                 DataService.prototype.onlineStatusCallback(true);
                 deferred.resolve();
+            },
+            error: function(xhr,status,error){
+                console.log("[ERROR] User data update failed");
+                DataService.prototype.onlineStatusCallback(false);
+                console.log(xhr);
+                console.log(status);
+                console.log(error);
+                deferred.reject();
+            }
+    });
+        
+    return deferred.promise();
+
+}
+
+DataService.prototype.isUserExist = function(){
+    var deferred = $.Deferred();
+
+    var uid = DataService.prototype.uid;
+    
+    $.ajax({
+            url: "http://www.rediscoverkerala.com/lent/app.php?method=isUserExist&uid="+uid,
+            success: function(result){
+                console.log(result);
+                console.log('isUserExist completed with success');
+                // Update local data also
+                DataService.prototype.onlineStatusCallback(true);
+                deferred.resolve(result);
             },
             error: function(xhr,status,error){
                 console.log("[ERROR] User data update failed");
