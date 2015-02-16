@@ -40,7 +40,7 @@ DataService.prototype.uid = undefined;
 
 // Pulled in by the service
 // The community code will be default
-DataService.prototype.userData = { 'crossesByDay' : undefined, 'communitycode': undefined, 'communitycount': undefined, 'lastCommunitycount': undefined };
+DataService.prototype.userData = { 'crossesByDay' : undefined, 'communitycode': undefined, 'communitycount': undefined, 'firstname' : undefined, 'remindertime': undefined };
 
 // Static
 DataService.prototype.contentData = {
@@ -106,8 +106,10 @@ DataService.prototype.getUserData = function(){
             success: function(data, type){
                 console.log(data);
                 DataService.prototype.userData['crossesByDay'] = data['crossesByDay'];
+                DataService.prototype.userData['firstname'] = data['firstname'];
                 DataService.prototype.userData['communitycode'] = data['communitycode'];
                 DataService.prototype.userData['communitycount'] = data['communitycount'];
+                DataService.prototype.userData['remindertime'] = data['remindertime'];
                 DataService.prototype.onlineStatusCallback(true);
                 console.log('Userdata loaded.');
                 deferred.resolve();
@@ -180,4 +182,59 @@ DataService.prototype.isUserExist = function(){
         
     return deferred.promise();
 
+}
+
+DataService.prototype.createNewUserAndAddToCommunity = function(firstname, remindertime){
+    var deferred = $.Deferred();
+
+    var uid = DataService.prototype.uid;
+    
+    $.ajax({
+            url: "http://www.rediscoverkerala.com/lent/app.php?method=createNewUserAndAddToCommunity&uid="+uid+"&communitycode=default&firstname="+firstname+"&remindertime="+remindertime,
+            success: function(result){
+                console.log(result);
+                console.log('createNewUserAndAddToCommunity completed with success');
+                // Update local data also
+                DataService.prototype.onlineStatusCallback(true);
+                deferred.resolve();
+            },
+            error: function(xhr,status,error){
+                console.log("[ERROR] User data update failed");
+                DataService.prototype.onlineStatusCallback(false);
+                console.log(xhr);
+                console.log(status);
+                console.log(error);
+                deferred.reject();
+            }
+    });
+        
+    return deferred.promise();
+
+}
+
+DataService.prototype.updateUserSettings = function(firstname, remindertime){
+    var deferred = $.Deferred();
+
+    var uid = DataService.prototype.uid;
+    
+    $.ajax({
+            url: "http://www.rediscoverkerala.com/lent/app.php?method=updateUserSettings&uid="+uid+"&firstname="+firstname+"&remindertime="+remindertime,
+            success: function(result){
+                console.log(result);
+                console.log('updateUserSettings completed with success');
+                // Update local data also
+                DataService.prototype.onlineStatusCallback(true);
+                deferred.resolve();
+            },
+            error: function(xhr,status,error){
+                console.log("[ERROR] User data update failed");
+                DataService.prototype.onlineStatusCallback(false);
+                console.log(xhr);
+                console.log(status);
+                console.log(error);
+                deferred.reject();
+            }
+    });
+        
+    return deferred.promise();
 }

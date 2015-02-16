@@ -11,6 +11,29 @@
 </head>
 <body>
 
+<script id="newuser-tpl" type="text/template">
+    <header class="bar bar-nav">
+      <h1 class="title">New user</h1>
+    </header>
+    <div class="content">
+        Welcome new user<br/>
+        Name: <input class="input_name" type="text" /><br/>
+        Alarm time: 
+        <select class="input_remindertime" style="width: 30%;">
+          <option value="5">5 am</option>
+          <option value="6">6 am</option>
+          <option value="12">12 noon</option>
+          <option value="13">1 pm</option>
+        </select>        
+        <span style="color: gray">( Tap to select )</span>                
+    </div>
+    <nav class="bar bar-tab">
+      <a class="tab-item active newuserlink" href="#newuser/1">
+        <span class="tab-label">Done</span>
+      </a>
+    </nav>
+</script>
+
 <script id="clouds-tpl" type="text/template">
     <div class="content">
         <div style="position: absolute; left:0; top: 0; width: 100%; height: 100%; background-image: url(assets/pics/clouds/pasture.svg); background-repeat: no-repeat; background-size: cover;"/>
@@ -223,6 +246,7 @@
 <script src="js/CrossesView.js"></script>
 <script src="js/MylentView.js"></script>
 <script src="js/CloudsView.js"></script>
+<script src="js/NewUserView.js"></script>
 <script src="js/SplashScreenView.js"></script>
 <script src="js/AppState.js"></script>
 <script src="js/app.js"></script>

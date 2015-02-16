@@ -67,11 +67,49 @@
             }
         });
 
+        router.addRoute('newuser/:random', function() {
+        
+            // change the href so that clicking the link with trigger this action again            
+            var rand = new Date().getTime();
+            var newhref = ($(".newuserlink",".page")[0]).href.replace(/#newuser.*/,'#newuser/'+rand);
+            $(".newuserlink",".page").attr('href',newhref);
+            
+            var name = ($(".input_name",".page")[0]).value;   
+            var remindertime = ($(".input_remindertime",".page")[0]).value;
+            
+            if (name == undefined || name.length == 0){
+                alert('Please enter your name');
+                return;
+            }            
+            DataService.prototype.createNewUserAndAddToCommunity(name, remindertime).then(
+                function(){
+                    // decode reminder time to the date
+                    var timestamp = 1424188800000 + parseInt(remindertime)*(1000*3600);
+                    window.plugin.notification.local.add({
+                        id: 1,
+                        title: 'Lent',
+                        date: timestamp,
+                        message: 'Dont forget todays cross',
+                        repeat: 'daily',                        
+                    });
+                    
+                    alert('Welcome '+name);
+                    // reload page
+                    window.location.href='';
+                },
+                networkError
+            );
+        });
+        
         router.addRoute('mylent/:week_n/:fx', function(weekExpr, transitionFx){
             console.log('mylent'+transitionFx);
             var week_n = eval(weekExpr)-1;
             var mylentView = makeMylentView(eval(week_n));
             slider.newPage(mylentView.render().$el, transitionFx);
+        });
+        
+        router.addRoute('settime/:time', function(time) {
+            console.log('settime'+time);
         });
         
         router.addRoute('addmycross', function() {
@@ -126,27 +164,14 @@
         });
                     
         router.start();
-                
-        // Test the local notification
-        window.plugin.notification.local.add({
-            id:         1,
-            message:    'I love BlackBerry!',
-            json:       JSON.stringify({ test: 123 })
-        });
-
-        window.plugin.notification.local.onclick = function (id, state, json) {
-            console.log(id +","+ json);
-            alert(id +","+ json);
-        }
-        
+                        
         // TODO: For debug only
-        DataService.prototype.uid = 1; // device.uuid
+        DataService.prototype.uid = 9; // device.uuid
         
-        // First check if user exist
         DataService.prototype.isUserExist().then(
             function(isExist){
                 if (!isExist){
-                    // continue
+                    slider.newPage(new NewUserView().render().$el);
                 } else {
                     DataService.prototype.initializeOnStartUp().then(
                         function(){
