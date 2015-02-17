@@ -251,7 +251,7 @@
             };
         }
         
-        var uid = device.uuid;
+        //var uid = device.uuid;
         thisPartOfInitWorksOnThePCAlso();
         
     }, false);
