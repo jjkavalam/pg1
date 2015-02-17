@@ -48,8 +48,8 @@
         slider.newPage(mylentView.render().$el);    
     };
     
-    var networkError = function(){
-        alert('Err: Please ensure you are online and try again.');
+    var networkError = function(error){
+        alert('Err: Please ensure you are online and try again.'+error);
     }
     
     var thisPartOfInitWorksOnThePCAlso = function(){

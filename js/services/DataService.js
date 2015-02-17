@@ -176,7 +176,7 @@ DataService.prototype.isUserExist = function(){
                 console.log(xhr);
                 console.log(status);
                 console.log(error);
-                deferred.reject();
+                deferred.reject(status);
             }
     });
         
