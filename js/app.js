@@ -48,9 +48,9 @@
         slider.newPage(mylentView.render().$el);    
     };
     
-    var networkError = function(error){
-        alert('Err: Please ensure you are online and try again.'+error);
-    }
+    var networkError = function(){
+        alert('Err: Please ensure you are online and try again.');
+    }    
     
     var thisPartOfInitWorksOnThePCAlso = function(){
         
@@ -255,11 +255,7 @@
         thisPartOfInitWorksOnThePCAlso();
         
     }, false);
-    
-    $(document).ready(function(){        
-        thisPartOfInitWorksOnThePCAlso();
-    });
-    
+        
     $(document).on("custom_event_community_count", function(){
         console.log('Event received');
     });
