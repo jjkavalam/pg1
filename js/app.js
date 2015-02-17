@@ -171,7 +171,7 @@
         DataService.prototype.isUserExist().then(
             function(isExist){
                 if (!isExist){
-                    slider.newPage(new NewUserView().render().$el);
+                    slider.newPage(new NewUserView().render('Welcome. Please fill in the following settings.').$el);
                 } else {
                     DataService.prototype.initializeOnStartUp().then(
                         function(){
