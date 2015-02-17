@@ -252,10 +252,12 @@
         }
         
         //var uid = device.uuid;
+        alert('Ready');
         thisPartOfInitWorksOnThePCAlso();
         
     }, false);
-        
+
+    //$(document).ready(function(){thisPartOfInitWorksOnThePCAlso();});
     $(document).on("custom_event_community_count", function(){
         console.log('Event received');
     });
