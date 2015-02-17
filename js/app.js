@@ -85,9 +85,9 @@
             isNewUserMode = eval(isNewUserMode);
             console.log('isNewUserMode='+isNewUserMode);
             
-            var rand = new Date().getTime();
-            var newhref = ($(".settingsdone",".page")[0]).href.replace(/#settings.*/,'') + '/' +isNewUserMode+'/'+rand;
-            $(".newuserlink",".page").attr('href',newhref);
+            var rand = new Date().getTime();            
+            var newhref = ($(".settingsdone",".page")[0]).href.replace(/#settings.*/,'') + '#settings/' +isNewUserMode+'/'+rand;
+            $(".settingsdone",".page").attr('href',newhref);
                         
             var name = ($(".input_name",".page")[0]).value;   
             var remindertime = ($(".input_remindertime",".page")[0]).value;
@@ -135,7 +135,7 @@
                             message: 'Dont forget todays cross',
                             repeat: 'daily',                        
                         });
-                        
+
                         alert('Settings updated');                        
 
                         // reload page
