@@ -1,9 +1,13 @@
  var NewUserView = function () {
 
-    var message;
+    var isNewUserMode;
+    var href;
     
-    this.render = function(message) {
-        this.message = message;
+    this.render = function(isNewUserMode) {
+    
+        this.isNewUserMode = isNewUserMode;
+        this.href = isNewUserMode+'';
+
         this.$el = $('<div/>');
         this.$el.html(this.template(this));
         return this;

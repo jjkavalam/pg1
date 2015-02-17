@@ -66,39 +66,86 @@
                 gotoHomeScreen();
             }
         });
-
-        router.addRoute('newuser/:random', function() {
         
-            // change the href so that clicking the link with trigger this action again            
-            var rand = new Date().getTime();
-            var newhref = ($(".newuserlink",".page")[0]).href.replace(/#newuser.*/,'#newuser/'+rand);
-            $(".newuserlink",".page").attr('href',newhref);
+        router.addRoute('show_settings', function(){
+            slider.newPage(new NewUserView().render(false).$el).done(
+                function(){
+                    ($(".input_name",".page")[0]).value = DataService.prototype.userData['firstname'];   
+                    ($(".input_remindertime",".page")[0]).value = DataService.prototype.userData['remindertime'];               
+                }
+            );
             
+            // load existing settings into the view
+            
+        });
+        
+        router.addRoute('settings/:isNewUserMode/:random', function(isNewUserMode, rnd) {
+        
+            // change the href so that clicking the link with trigger this action again
+            isNewUserMode = eval(isNewUserMode);
+            console.log('isNewUserMode='+isNewUserMode);
+            
+            var rand = new Date().getTime();
+            var newhref = ($(".settingsdone",".page")[0]).href.replace(/#settings.*/,'') + '/' +isNewUserMode+'/'+rand;
+            $(".newuserlink",".page").attr('href',newhref);
+                        
             var name = ($(".input_name",".page")[0]).value;   
             var remindertime = ($(".input_remindertime",".page")[0]).value;
+            var remindertime_minute = ($(".input_remindertime_minute",".page")[0]).value;
+
+            var minutes = remindertime_minute == undefined || remindertime_minute.length == 0 ? 0 : parseInt(remindertime_minute);
+            var timestamp = 1424188800000 + parseInt(remindertime)*(1000*3600) + minutes*60*1000;
             
             if (name == undefined || name.length == 0){
                 alert('Please enter your name');
                 return;
-            }            
-            DataService.prototype.createNewUserAndAddToCommunity(name, remindertime).then(
-                function(){
-                    // decode reminder time to the date
-                    var timestamp = 1424188800000 + parseInt(remindertime)*(1000*3600);
-                    window.plugin.notification.local.add({
-                        id: 1,
-                        title: 'Lent',
-                        date: timestamp,
-                        message: 'Dont forget todays cross',
-                        repeat: 'daily',                        
-                    });
-                    
-                    alert('Welcome '+name);
-                    // reload page
-                    window.location.href='';
-                },
-                networkError
-            );
+            }
+            
+            alert('Alarm timestamp'+timestamp);
+            
+            if (isNewUserMode){
+                DataService.prototype.createNewUserAndAddToCommunity(name, remindertime).then(
+                    function(){
+                        // decode reminder time to the date
+
+                        window.plugin.notification.local.add({
+                            id: 1,
+                            title: 'Lent',
+                            date: timestamp,
+                            message: 'Dont forget todays cross',
+                            repeat: 'daily',                        
+                        });
+                        
+                        alert('Welcome '+name);
+                        
+                        // reload page
+                        window.location.href='';
+                    },
+                    networkError
+                );            
+            } else {                
+                DataService.prototype.updateUserSettings(name, remindertime).then(
+                    function(){
+                        window.plugin.notification.local.cancel(1);
+                        
+                        window.plugin.notification.local.add({
+                            id: 1,
+                            title: 'Lent',
+                            date: timestamp,
+                            message: 'Dont forget todays cross',
+                            repeat: 'daily',                        
+                        });
+                        
+                        alert('Settings updated');                        
+
+                        // reload page
+                        window.location.href='';
+                        
+                    },
+                    networkError                
+                );
+            }
+
         });
         
         router.addRoute('mylent/:week_n/:fx', function(weekExpr, transitionFx){
@@ -170,8 +217,8 @@
         
         DataService.prototype.isUserExist().then(
             function(isExist){
-                if (!isExist){
-                    slider.newPage(new NewUserView().render('Welcome. Please fill in the following settings.').$el);
+                if (!isExist){                
+                    slider.newPage(new NewUserView().render(true).$el);
                 } else {
                     DataService.prototype.initializeOnStartUp().then(
                         function(){

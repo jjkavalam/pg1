@@ -19,7 +19,11 @@
         <ul class="table-view">
             <li class="table-view-cell">
                <p>
-                {{ message }}
+                {{#if isNewUserMode }}
+                Welcome. Please enter your name and the time you wish to be reminded everyday.
+                {{else}}
+                Change the settings on this page.
+                {{/if}}
                </p>
             </li>                   
             <li class="table-view-cell">
@@ -65,15 +69,16 @@
                         }
                     }());            
                 ">
-                <span class="icon icon-down remindertime_up"></span>        
+                <span class="icon icon-down remindertime_up"></span>                
                 </a>
+                <input type="text" value="" class="input_remindertime_minute" placeholder="minutes"/>
             </li>            
         </ul>
         
     </div>
     </div>
     <nav class="bar bar-tab">
-      <a class="tab-item active newuserlink" href="#newuser/1">
+      <a class="tab-item active settingsdone" href="#settings/{{ href }}/1">
         <span class="tab-label">Done</span>
       </a>
     </nav>
@@ -204,7 +209,7 @@
             <span class="tab-label">Add my cross</span>
         </a>  
         {{/if}}
-        <a class="tab-item" href="#settings">
+        <a class="tab-item" href="#show_settings">
             <span class="icon icon-gear"></span>
             <span class="tab-label">Settings</span>
         </a>
