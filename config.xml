@@ -25,4 +25,7 @@
         jjkavalam
     </author>
 
+    <!-- whitelist access to all domains -->
+    <access origin="*" />
+    
 </widget>
