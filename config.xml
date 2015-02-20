@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
     <widget xmlns   = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
-        id          = "com.phonegap.example"
+        id          = "com.jjkavalam.lentapp"
         versionCode = "10" 
         version     = "1.0.0" >
 
@@ -18,10 +18,7 @@
     <gap:plugin name="org.apache.cordova.file" version="1.3.1" />
     <gap:plugin name="org.apache.cordova.statusbar" version="0.1.4" />
     
-    <feature name="http://api.phonegap.com/1.0/network"/>
-    <gap:plugin name="org.apache.cordova.network-information" version="0.2.12" />
-    
-    <author href="" email="">
+    <author href="" email="jjkavalam@gmail.com">
         jjkavalam
     </author>
 

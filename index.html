@@ -58,6 +58,7 @@
                   <option value="22">10 pm</option>
                   <option value="23">11 pm</option>
                 </select>
+                &nbsp;&nbsp;&nbsp;&nbsp;
                 <a style="display: inline" onclick="
                     (function(){
                         var val = parseInt(($('.input_remindertime')[0]).value);
@@ -66,6 +67,7 @@
                         }
                     }());            
                 "><span class="icon icon-up"></span></a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
                 <a style="display: inline" onclick="
                     (function(){
                         var val = parseInt(($('.input_remindertime')[0]).value);
@@ -283,7 +285,9 @@
 
 <script id="splashscreen-tpl" type="text/template">
     <div class="content">
+    <div style="position: absolute; left: 50%; top: 50%; transform: translateY(-50%);">
         Loading ...
+    </div>
     </div>
 </script>
 

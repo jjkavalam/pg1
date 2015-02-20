@@ -94,8 +94,13 @@
             var remindertime_minute = ($(".input_remindertime_minute",".page")[0]).value;
 
             var minutes = (remindertime_minute == undefined || remindertime_minute.length == 0) ? 0 : parseInt(remindertime_minute);
+            
             // find the timestamp of the next immediate alarm time
             var timestamp = 1424188800000 + parseInt(remindertime)*(1000*3600) + minutes*60*1000;
+            var now = new Date();
+            while(timestamp < now){
+                timestamp = new Date(timestamp.getTime()+(24*3600*1000));
+            }
             
             if (name == undefined || name.length == 0){
                 alert('Please enter your name');
@@ -127,6 +132,11 @@
                 var isDontShowReminder = ($("#dont_show_reminder")[0]).checked;
                 if (isDontShowReminder){
                     window.plugin.notification.local.cancelAll();
+                    alert('Settings updated');                        
+
+                    // reload page
+                    window.location.href='';
+                    
                 } else {
             
                     DataService.prototype.updateUserSettings(name, remindertime).then(
@@ -216,8 +226,7 @@
                     
         router.start();
                         
-        // TODO: For debug only
-        DataService.prototype.uid = 9; // device.uuid
+        DataService.prototype.uid = device.uuid;
         
         DataService.prototype.isUserExist().then(
             function(isExist){
@@ -256,7 +265,6 @@
         }
         
         //var uid = device.uuid;
-        alert('Ready');
         thisPartOfInitWorksOnThePCAlso();
         
     }, false);
