@@ -33,6 +33,11 @@
             <li class="table-view-cell">
                 <b>Alarm time: </b>
                 <select class="input_remindertime" style="width: 30%;" disabled="true">
+                <option value="0">12 midnight</option>
+                <option value="1">1 am</option>
+                <option value="2">2 am</option>
+                <option value="3">3 am</option>
+                <option value="4">4 am</option>
                   <option value="5">5 am</option>
                   <option value="6">6 am</option>
                   <option value="7">7 am</option>
@@ -71,8 +76,12 @@
                 ">
                 <span class="icon icon-down remindertime_up"></span>                
                 </a>
-                <input type="text" value="" class="input_remindertime_minute" placeholder="minutes"/>
+                <input style="visibility: hidden;" type="text" value="" class="input_remindertime_minute" placeholder="minutes"/>
             </li>            
+            <li class="table-view-cell">
+                <input type="checkbox" id="dont_show_reminder">Don't show reminders any more                
+            </li>
+            
         </ul>
         
     </div>

@@ -93,57 +93,61 @@
             var remindertime = ($(".input_remindertime",".page")[0]).value;
             var remindertime_minute = ($(".input_remindertime_minute",".page")[0]).value;
 
-            var minutes = remindertime_minute == undefined || remindertime_minute.length == 0 ? 0 : parseInt(remindertime_minute);
+            var minutes = (remindertime_minute == undefined || remindertime_minute.length == 0) ? 0 : parseInt(remindertime_minute);
+            // find the timestamp of the next immediate alarm time
             var timestamp = 1424188800000 + parseInt(remindertime)*(1000*3600) + minutes*60*1000;
             
             if (name == undefined || name.length == 0){
                 alert('Please enter your name');
                 return;
             }
-            
-            alert('Alarm timestamp'+timestamp);
-            
+                                    
             if (isNewUserMode){
-                DataService.prototype.createNewUserAndAddToCommunity(name, remindertime).then(
+                DataService.prototype.createNewUserAndAddToCommunity(name, remindertime).then(                
                     function(){
-                        // decode reminder time to the date
 
                         window.plugin.notification.local.add({
                             id: 1,
                             title: 'Lent',
-                            date: timestamp,
+                            date: new Date(timestamp),
                             message: 'Dont forget todays cross',
                             repeat: 'daily',                        
                         });
-                        
+                    
                         alert('Welcome '+name);
-                        
+
                         // reload page
                         window.location.href='';
+
                     },
                     networkError
                 );            
-            } else {                
-                DataService.prototype.updateUserSettings(name, remindertime).then(
-                    function(){
-                        window.plugin.notification.local.cancel(1);
+            } else {    
+            
+                var isDontShowReminder = ($("#dont_show_reminder")[0]).checked;
+                if (isDontShowReminder){
+                    window.plugin.notification.local.cancelAll();
+                } else {
+            
+                    DataService.prototype.updateUserSettings(name, remindertime).then(
+                        function(){
+                            window.plugin.notification.local.add({
+                                id: 1,
+                                title: 'Lent',
+                                date: new Date(timestamp),
+                                message: 'Dont forget todays cross',
+                                repeat: 'daily',                        
+                            });
                         
-                        window.plugin.notification.local.add({
-                            id: 1,
-                            title: 'Lent',
-                            date: timestamp,
-                            message: 'Dont forget todays cross',
-                            repeat: 'daily',                        
-                        });
+                            alert('Settings updated');                        
 
-                        alert('Settings updated');                        
-
-                        // reload page
-                        window.location.href='';
-                        
-                    },
-                    networkError                
-                );
+                            // reload page
+                            window.location.href='';
+                        },
+                        networkError                
+                    );
+                    
+                }
             }
 
         });
