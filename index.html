@@ -58,7 +58,8 @@
                   <option value="22">10 pm</option>
                   <option value="23">11 pm</option>
                 </select>
-                &nbsp;&nbsp;&nbsp;&nbsp;
+            </li>
+            <li class="table-view-cell">
                 <a style="display: inline" onclick="
                     (function(){
                         var val = parseInt(($('.input_remindertime')[0]).value);
@@ -66,8 +67,9 @@
                             ($('.input_remindertime')[0]).value = val + 1;
                         }
                     }());            
-                "><span class="icon icon-up"></span></a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
+                "><span class="icon icon-up"></span>Move up</a>
+            </li>
+            <li>
                 <a style="display: inline" onclick="
                     (function(){
                         var val = parseInt(($('.input_remindertime')[0]).value);
@@ -76,9 +78,8 @@
                         }
                     }());            
                 ">
-                <span class="icon icon-down remindertime_up"></span>                
-                </a>
-                <input style="visibility: hidden;" type="text" value="" class="input_remindertime_minute" placeholder="minutes"/>
+                <span class="icon icon-down remindertime_up"></span>Move down</a>
+                <input style="display: none;" type="text" value="" class="input_remindertime_minute" placeholder="minutes"/>
             </li>            
             <li class="table-view-cell">
                 <input type="checkbox" id="dont_show_reminder">Don't show reminders any more                
@@ -109,7 +110,7 @@
             </span>
             
             <br/><br/><br/>
-            <span class="badge badge-positive" style="font-size: 1.0em; transform: translateY(-50%)">Crosses earned so far</span>
+            <span class="badge badge-positive" style="font-size: 1.0em; -webkit-transform: translateY(-50%); transform: translateY(-50%)">Crosses earned so far</span>
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
                     viewBox="0 0 404 564"
                     style="max-height: 100px; width: 32px; height: 32px;"                
@@ -119,7 +120,7 @@
             <span class="numcrosses nummycrosses" style="font-family: fantasy; font-size: 2em; color: red;"></span> 
 
             <br/>
-            <span class="badge badge-positive" style="font-size: 1.0em; transform: translateY(-50%)">Class's total contribution</span>
+            <span class="badge badge-positive" style="font-size: 1.0em; -webkit-transform: translateY(-50%); transform: translateY(-50%)">Class's total contribution</span>
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
                     viewBox="0 0 404 564"
                     style="max-height: 100px; width: 32px; height: 32px;"                
@@ -175,7 +176,7 @@
             <li class="table-view-cell media {{style_class}}_box">
                 <div style="position: absolute; right:0; top: 0; height: 100%;">
                 <span style="visibility: hidden; font-size: 1.5em;">23 Feb</span>                
-                <div style="border: 1px solid lightgray; position: absolute; top: 50%; transform: translateY(-50%); right:0; border-radius: 5px; text-align: center; margin-right:4px; opacity: 0.8; ">
+                <div style="border: 1px solid lightgray; position: absolute; top: 50%; -webkit-transform: translateY(-50%); transform: translateY(-50%); right:0; border-radius: 5px; text-align: center; margin-right:4px; opacity: 0.8; ">
                     <div style="background: lightgray; color: black; font-size: 0.8em;">&nbsp;Day {{ day_seq }}&nbsp;</div>
                     <div style="background: white; color: red; font-size: 1.2em; font-family: fantasy; line-height: 150%;">&nbsp;{{ cal_date }}&nbsp;</div>
                     <div style="background: lightgray; color: black; font-size: 0.8em;">&nbsp;{{ cal_day }}&nbsp;</div>
@@ -285,7 +286,7 @@
 
 <script id="splashscreen-tpl" type="text/template">
     <div class="content">
-    <div style="position: absolute; left: 50%; top: 50%; transform: translateY(-50%);">
+    <div style="position: absolute; left: 50%; top: 50%; -webkit-transform: translateY(-50%); transform: translateY(-50%);">
         Loading ...
     </div>
     </div>

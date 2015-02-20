@@ -96,7 +96,7 @@
             var minutes = (remindertime_minute == undefined || remindertime_minute.length == 0) ? 0 : parseInt(remindertime_minute);
             
             // find the timestamp of the next immediate alarm time
-            var timestamp = 1424188800000 + parseInt(remindertime)*(1000*3600) + minutes*60*1000;
+            var timestamp = new Date(1424188800000 + parseInt(remindertime)*(1000*3600) + minutes*60*1000);
             var now = new Date();
             while(timestamp < now){
                 timestamp = new Date(timestamp.getTime()+(24*3600*1000));
@@ -114,7 +114,7 @@
                         window.plugin.notification.local.add({
                             id: 1,
                             title: 'Lent',
-                            date: new Date(timestamp),
+                            date: timestamp,
                             message: 'Dont forget todays cross',
                             repeat: 'minutely',                        
                         });
@@ -144,7 +144,7 @@
                             window.plugin.notification.local.add({
                                 id: 1,
                                 title: 'Lent',
-                                date: new Date(timestamp),
+                                date: timestamp,
                                 message: 'Dont forget todays cross',
                                 repeat: 'minutely',                        
                             });
