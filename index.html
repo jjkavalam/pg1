@@ -32,7 +32,8 @@
             </li>
             <li class="table-view-cell">
                 <b>Alarm time: </b>
-                <select class="input_remindertime" style="width: 30%;" disabled="true">
+                <select class="input_remindertime" style="width: 50%;" >
+                <option value="9">Default (9 am) - Tap here to change</option>
                 <option value="0">12 midnight</option>
                 <option value="1">1 am</option>
                 <option value="2">2 am</option>
@@ -59,30 +60,11 @@
                   <option value="23">11 pm</option>
                 </select>
             </li>
-            <li class="table-view-cell">
-                <a style="display: inline" onclick="
-                    (function(){
-                        var val = parseInt(($('.input_remindertime')[0]).value);
-                        if (val < 23){
-                            ($('.input_remindertime')[0]).value = val + 1;
-                        }
-                    }());            
-                "><span class="icon icon-up"></span>Move up</a>
-            </li>
-            <li>
-                <a style="display: inline" onclick="
-                    (function(){
-                        var val = parseInt(($('.input_remindertime')[0]).value);
-                        if (val > 5){
-                            ($('.input_remindertime')[0]).value = val - 1;
-                        }
-                    }());            
-                ">
-                <span class="icon icon-down remindertime_up"></span>Move down</a>
+            <li class="table-view-cell" style="display: none;">
                 <input style="display: none;" type="text" value="" class="input_remindertime_minute" placeholder="minutes"/>
             </li>            
             <li class="table-view-cell">
-                <input type="checkbox" id="dont_show_reminder">Don't show reminders any more                
+                <input type="checkbox" id="dont_show_reminder">Don't show reminders any more
             </li>
             
         </ul>
