@@ -111,7 +111,7 @@
                             title: 'Lent',
                             date: new Date(timestamp),
                             message: 'Dont forget todays cross',
-                            repeat: 'daily',                        
+                            repeat: 'minutely',                        
                         });
                     
                         alert('Welcome '+name);
@@ -136,7 +136,7 @@
                                 title: 'Lent',
                                 date: new Date(timestamp),
                                 message: 'Dont forget todays cross',
-                                repeat: 'daily',                        
+                                repeat: 'minutely',                        
                             });
                         
                             alert('Settings updated');                        
