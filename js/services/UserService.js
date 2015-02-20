@@ -4,7 +4,7 @@ var UserService = function(){
     var end_time = new Date("Apr 4 2015 23:59:59"); 
 
     this.getToday = function(){
-        return new Date("3/19/2015");
+        return new Date();
     }    
     
     this.getName = function(){
