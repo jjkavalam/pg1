@@ -8,7 +8,7 @@ var UserService = function(){
     }    
     
     this.getName = function(){
-        return "Jobin";
+        return DataService.prototype.userData['firstname'];;
     }
     
     this.isTodayBeforeLent = function(){
@@ -145,6 +145,7 @@ var UserService = function(){
 DataService.prototype.userData['crossesByDay'];
 DataService.prototype.userData['deviceID'];
 DataService.prototype.userData['classID'];
+DataService.prototype.userData['firstname'];
 
 UserService.prototype.cal_days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 UserService.prototype.cal_months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
