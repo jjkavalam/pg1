@@ -1,8 +1,8 @@
 // We use an "Immediate Function" to initialize the application to avoid leaving anything behind in the global scope
 (function () {
 
-    /* Debug */
-    
+    var debug = true;
+   
     /* ---------------------------------- Local Variables ---------------------------------- */
     CrossesView.prototype.template = Handlebars.compile($("#crosses-tpl").html());
     
@@ -28,6 +28,7 @@
     
         var weeknToday = userService.getWeekNOfToday();
         var isTodayHasCross = userService.isTodayHasCross();
+        if (debug) isTodayHasCross = false;
         var isThisWeek = (weeknToday == week_n);       
     
         var mylentView = new MylentView();
@@ -106,11 +107,12 @@
                 alert('Please enter your name');
                 return;
             }
-                                    
+                                               
             if (isNewUserMode){
                 DataService.prototype.createNewUserAndAddToCommunity(name, remindertime).then(                
                     function(){
-
+                        
+                        if (!debug)
                         window.plugin.notification.local.add({
                             id: 1,
                             title: 'Lent',
@@ -131,6 +133,7 @@
             
                 var isDontShowReminder = ($("#dont_show_reminder")[0]).checked;
                 if (isDontShowReminder){
+                    if (!debug)
                     window.plugin.notification.local.cancelAll();
                     alert('Settings updated');                        
 
@@ -141,6 +144,7 @@
             
                     DataService.prototype.updateUserSettings(name, remindertime).then(
                         function(){
+                            if (!debug)
                             window.plugin.notification.local.add({
                                 id: 1,
                                 title: 'Lent',
@@ -225,8 +229,9 @@
         });
                     
         router.start();
-                        
-        DataService.prototype.uid = device.uuid;
+
+        if (!debug)DataService.prototype.uid = device.uuid;        
+        if (debug) DataService.prototype.uid = 10;
         
         DataService.prototype.isUserExist().then(
             function(isExist){
@@ -269,7 +274,8 @@
         
     }, false);
 
-    //$(document).ready(function(){thisPartOfInitWorksOnThePCAlso();});
+    if (debug) $(document).ready(function(){thisPartOfInitWorksOnThePCAlso();});
+    
     $(document).on("custom_event_community_count", function(){
         console.log('Event received');
     });
