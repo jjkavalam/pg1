@@ -2,13 +2,10 @@ var CardService = function(){
 
     var userService = new UserService();
     
-    DataService.prototype.contentData;
-    
-    this.initialize = function() {
-    }
+    //DataService.prototype.contentData;    
     
     this.getThankyouMessage = function(){
-         
+        return "Well done !";
     }
     
     this.getMylentCardsForWeek = function(week_n){
@@ -71,8 +68,7 @@ var CardService = function(){
         for (var i = 0; i < cards.length; i++){
             cards[i].cross_idx = i;
         }
-        
-        
+                
         var crossesCountByType = userService.getCrossesCountByType();
         console.log(crossesCountByType);
         for (var i = 0; i < cards.length; i++){

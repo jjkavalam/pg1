@@ -1,27 +1,8 @@
 var DataService = function(){
-    // Get content and user data from the web on load
-    // Show loader till initialize is complete
-        
-    // Perform periodic updates of cotent (5 min)
-    // User data (5s)    
-    // download and update no matter what
-    
-    // trigger newcross event if requried
-    
-    // update user data upon 'I did this'
-    
-    // when fail to contact server
-    // -- if its on startup fail the app
-    // -- 'I did this' : complete server transaction before showing victory screen, show 'try again' message if failed
-    // -- All other times, simply ignore (but show a warning notification)
-    
-    // employees = JSON.parse(window.localStorage.getItem("employees"));
-    // window.localStorage.setItem("employees", JSON.stringify(employees));    
-    
 }
 
 // Set during initialization
-DataService.prototype.filename;
+DataService.prototype.filename = "data5.txt";
 
 // Pulled in by the service
 // The community code will be default
@@ -41,8 +22,7 @@ DataService.prototype.contentData = {
 }
 
 // done or reject
-DataService.prototype.initializeOnStartUp = function(){
-    DataService.prototype.filename = "data5.txt";
+DataService.prototype.initializeOnStartUp = function(){    
 }
 
 DataService.prototype.getUserData = function(){
@@ -84,7 +64,7 @@ DataService.prototype.isUserExist = function(){
 
 }
 
-DataService.prototype.createNewUserAndAddToCommunity = function(firstname, remindertime){
+DataService.prototype.createNewUser = function(firstname, remindertime){
     return DataService.prototype.updateUserSettings(firstname, remindertime);
 }
 

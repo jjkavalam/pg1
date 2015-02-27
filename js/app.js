@@ -3,24 +3,12 @@
 
     var debug = true;
    
-    /* ---------------------------------- Local Variables ---------------------------------- */
-    CrossesView.prototype.template = Handlebars.compile($("#crosses-tpl").html());
-    
-    var voteService = new VoteService();
-    var service = new EmployeeService();    
+    /* ---------------------------------- Local Variables ---------------------------------- */    
     var cardService = new CardService();
     var userService = new UserService();
     
     var slider = new PageSlider($('body'));
-  
-    var makeEmployeeView = function(id){
-        console.log('make Employee view ');
-        var employee = service.findByIdSync(parseInt(id));
-        var numvotes = voteService.getNumVotesById(parseInt(id));
-        if (numvotes == undefined) numvotes = 0;
-        return new EmployeeView(employee, numvotes);                        
-    };
-    
+      
     var LAST_WEEK = 6;
     
     var makeMylentView = function(week_n){
@@ -37,7 +25,6 @@
         mylentView.weekNumber = week_n+1;
         mylentView.cards = cardService.getMylentCardsForWeek(week_n);
 
-        mylentView.isOnline = DataService.prototype.isOnline;
         mylentView.isTodayHasCross = isTodayHasCross;
         mylentView.isDisplayEncouragement = isThisWeek && !isTodayHasCross;
         return mylentView;
@@ -53,14 +40,12 @@
         alert('File error.');
     }    
     
-    var thisPartOfInitWorksOnThePCAlso = function(){
+    var initApp = function(){
         
         var firstLoad = true;        
         router.addRoute('', function() {
-            // very first time show splash screen
             if (firstLoad){
-                // Show splash screen 
-                slider.newPage(new SplashScreenView().render().$el);    
+                slider.newPage(new SplashScreenView().render().$el);
                 firstLoad = false;
             } else {
                 DataService.prototype.getUserData();
@@ -74,10 +59,7 @@
                     ($(".input_name",".page")[0]).value = DataService.prototype.userData['firstname'];   
                     ($(".input_remindertime",".page")[0]).value = DataService.prototype.userData['remindertime'];               
                 }
-            );
-            
-            // load existing settings into the view
-            
+            );                      
         });
         
         router.addRoute('settings/:isNewUserMode/:random', function(isNewUserMode, rnd) {
@@ -109,7 +91,7 @@
             }
                                                
             if (isNewUserMode){
-                DataService.prototype.createNewUserAndAddToCommunity(name, remindertime).then(                
+                DataService.prototype.createNewUser(name, remindertime).then(
                     function(){
                         
                         if (!debug)
@@ -118,7 +100,7 @@
                             title: 'Lent',
                             date: timestamp,
                             message: 'Dont forget todays cross',
-                            repeat: 'minutely',                        
+                            repeat: 'daily',
                         });
                     
                         alert('Welcome '+name);
@@ -150,7 +132,7 @@
                                 title: 'Lent',
                                 date: timestamp,
                                 message: 'Dont forget todays cross',
-                                repeat: 'minutely',                        
+                                repeat: 'daily',                        
                             });
                         
                             alert('Settings updated');                        
@@ -203,14 +185,11 @@
                             var $el = cloudsView.render().$el;
                             
                             var userCrossCount = userService.getCrossCountUser();
-                            var communityCrossCount = userService.getCommunityCount();
                             
                             $('.nummycrosses', $el).html(userCrossCount-1);
-                            $('.numclasscrosses', $el).html(communityCrossCount-1);
                             
                             $('.sun',$el).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){                    
                                     $('.nummycrosses', $el).html(userCrossCount);                                            
-                                    $('.numclasscrosses', $el).html(communityCrossCount);
                             
                                 Animate.prototype.animateNow($('.numcrosses', $el),'bounceIn').done(function(){
                                     $('.bar','.page').css('visibility','visible');
@@ -268,15 +247,10 @@
             };
         }
         
-        thisPartOfInitWorksOnThePCAlso();
+        initApp();
         
     }, false);
 
-    //if (debug) $(document).ready(function(){thisPartOfInitWorksOnThePCAlso();});
-    
-    $(document).on("custom_event_community_count", function(){
-        console.log('Event received');
-    });
-    /* ---------------------------------- Local Functions ---------------------------------- */
+    //if (debug) $(document).ready(function(){initApp();});    
 
 }());

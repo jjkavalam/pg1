@@ -32,17 +32,7 @@ var UserService = function(){
             }
         }
     }
-    
-    /*this.isTodayInWeekN = function(week_n){
-        var daysOfWeek = this.getDaysOfWeek(week_n);
-        var day_seq = this.getDaySeqOfToday();
-        for (var i = 0; i < daysOfWeek.length; i++){
-            if (day_seq == daysOfWeek[i]) return true;
-        }
-        return false;
-    }
-    */
-    
+        
     this.getCalendarOfLent = function(){
         // 46 days starting from start date till end date
         var cal = new Array();
@@ -133,44 +123,11 @@ var UserService = function(){
         }
         return crossesCount;    
     }
-    this.getCommunityCount = function(){
-        return DataService.prototype.userData['communitycount'];
-    }
     this.getCrossesByDay = function(){
         return DataService.prototype.userData['crossesByDay'];
     }  
     
 }
 
-DataService.prototype.userData['crossesByDay'];
-DataService.prototype.userData['deviceID'];
-DataService.prototype.userData['classID'];
-DataService.prototype.userData['firstname'];
-
 UserService.prototype.cal_days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 UserService.prototype.cal_months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-(function(){
-    console.log('Remove this return statement to automatically generate the cross array for test');
-    return;
-    var oneOrZero = function(){
-        if (Math.random() < 0.5){
-            return 0;
-        } else {
-            return 1;
-        }
-    }
-
-    DataService.prototype.userData['crossesByDay'] = new Array(46);
-    for (var i = 0; i < 46; i++){
-        var oneOrTwo = Math.floor((Math.random() * 2) + 1);
-        if (oneOrTwo == 1){
-            DataService.prototype.userData['crossesByDay'][i] = -1;
-        } else {
-            DataService.prototype.userData['crossesByDay'][i] = Math.floor((Math.random() * 2) + 1) - 1;
-        }
-    }
-    console.log('Initialized crossesByDay');
-    console.log(DataService.prototype.userData['crossesByDay']);
-    
-})();

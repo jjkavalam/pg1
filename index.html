@@ -28,12 +28,12 @@
             </li>                   
             <li class="table-view-cell">
                 <b>Name: </b>
-                <input class="input_name" type="text" placeholder="ex: Mary"/>
+                <input class="input_name" type="text" placeholder="First name"/>
             </li>
             <li class="table-view-cell">
                 <b>Alarm time: </b>
                 <select class="input_remindertime" style="width: 50%;" >
-                <option value="9">Default (9 am) - Tap here to change</option>
+                <option value="9">Default (9 am)</option>
                 <option value="0">12 midnight</option>
                 <option value="1">1 am</option>
                 <option value="2">2 am</option>
@@ -101,15 +101,6 @@
             </svg>
             <span class="numcrosses nummycrosses" style="font-family: fantasy; font-size: 2em; color: red;"></span> 
 
-            <br/>
-            <span class="badge badge-positive" style="font-size: 1.0em; -webkit-transform: translateY(-50%); transform: translateY(-50%)">Class's total contribution</span>
-            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-                    viewBox="0 0 404 564"
-                    style="max-height: 100px; width: 32px; height: 32px;"                
-                    >
-                    <path transform="translate(2,2)scale(2,2)" fill="white" d="M0,80H80V0H120V80H200V120H120V280H80V120H0V80Z"/>
-            </svg>
-            <span class="numcrosses numclasscrosses" style="font-family: fantasy; font-size: 2em; color: blue;"></span> 
             </div>
 
         </div>
@@ -142,9 +133,6 @@
             <a href="#">Week <b>{{ weekNumber }}</b> of 7</a>
         </h>
     </header>
-    <!--<div class="bar bar-standard bar-header-secondary">
-        <input class='search-key' type="search"/>
-    </div>-->
     <div class="content">   
             {{#if isDisplayEncouragement}}
             <div style="text-align:center; font-size: 2.0em; line-height: 40px;">
@@ -207,17 +195,6 @@
             <span class="icon icon-gear"></span>
             <span class="tab-label">Settings</span>
         </a>
-        <!--
-        <a class="tab-item onlinestatusIndicator">
-        {{#if isOnline}}
-            <span class="icon icon-info" style="color: green"></span>
-            <span class="tab-label" style="color: green">Online</span>            
-        {{else}}            
-            <span class="icon icon-info" style="color: red"></span>
-            <span class="tab-label" style="color: red">Offline</span>                        
-        {{/if}}        
-        </a>
-        -->
     </nav>    
 </script>
 
@@ -284,18 +261,12 @@
 <script src="lib/animate.js"></script>
 <script src="js/services/DataService.js"></script>
 <script src="js/services/UserService.js"></script>
-<script src="js/services/file/EmployeeService.js"></script>
-<script src="js/services/file/VoteService.js"></script>
 <script src="js/services/CardService.js"></script>
-<script src="js/EmployeeListView.js"></script>
-<script src="js/HomeView.js"></script>
-<script src="js/EmployeeView.js"></script>
 <script src="js/CrossesView.js"></script>
 <script src="js/MylentView.js"></script>
 <script src="js/CloudsView.js"></script>
 <script src="js/NewUserView.js"></script>
 <script src="js/SplashScreenView.js"></script>
-<script src="js/AppState.js"></script>
 <script src="js/app.js"></script>
 
 </body>
