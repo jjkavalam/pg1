@@ -25,7 +25,7 @@ DataService.prototype.filename;
 
 // Pulled in by the service
 // The community code will be default
-DataService.prototype.userData = { 'crossesByDay' : [], 'communitycode': 0, 'communitycount': 0, 'firstname' : '', 'remindertime': 0 };
+DataService.prototype.userData = { 'crossesByDay' : [-1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1], 'firstname' : undefined, 'remindertime': undefined };
 
 // Static
 DataService.prototype.contentData = {
@@ -42,7 +42,7 @@ DataService.prototype.contentData = {
 
 // done or reject
 DataService.prototype.initializeOnStartUp = function(){
-    DataService.prototype.filename = "data3.txt";
+    DataService.prototype.filename = "data4.txt";
 }
 
 DataService.prototype.getUserData = function(){
@@ -55,8 +55,6 @@ DataService.prototype.getUserData = function(){
             var data = JSON.parse(json);
             DataService.prototype.userData['crossesByDay'] = data['crossesByDay'];
             DataService.prototype.userData['firstname'] = data['firstname'];
-            DataService.prototype.userData['communitycode'] = data['communitycode'];
-            DataService.prototype.userData['communitycount'] = data['communitycount'];
             DataService.prototype.userData['remindertime'] = data['remindertime'];
             deferred.resolve();
         }
