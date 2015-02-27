@@ -25,7 +25,7 @@ DataService.prototype.filename;
 
 // Pulled in by the service
 // The community code will be default
-DataService.prototype.userData = { 'crossesByDay' : undefined, 'communitycode': undefined, 'communitycount': undefined, 'firstname' : undefined, 'remindertime': undefined };
+DataService.prototype.userData = { 'crossesByDay' : [], 'communitycode': 0, 'communitycount': 0, 'firstname' : '', 'remindertime': 0 };
 
 // Static
 DataService.prototype.contentData = {
@@ -42,7 +42,7 @@ DataService.prototype.contentData = {
 
 // done or reject
 DataService.prototype.initializeOnStartUp = function(){
-    DataService.prototype.filename = "data.txt";
+    DataService.prototype.filename = "data3.txt";
 }
 
 DataService.prototype.getUserData = function(){
@@ -71,12 +71,14 @@ DataService.prototype.putCross = function(dayseq, crossid){
 
 DataService.prototype.isUserExist = function(){
     var deferred = $.Deferred();
-
-    FSWrapper.prototype.getFile(DataService.prototype.filename, function(fileEntry, err){
-        if (fileEntry == null){
-            deferred.resolve(false);
-        } else {
+    
+    FSWrapper.prototype.isFileExists(DataService.prototype.filename, function(exists,arg){
+        if (exists){
+            console.log(arg);
             deferred.resolve(true);
+        } else {
+            console.log(arg);
+            deferred.resolve(false);
         }
     });
         
