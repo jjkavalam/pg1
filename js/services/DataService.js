@@ -42,7 +42,7 @@ DataService.prototype.contentData = {
 
 // done or reject
 DataService.prototype.initializeOnStartUp = function(){
-    DataService.prototype.filename = cordova.file.dataDirectory + "data.txt";
+    DataService.prototype.filename = "data.txt";
 }
 
 DataService.prototype.getUserData = function(){
@@ -51,6 +51,7 @@ DataService.prototype.getUserData = function(){
         if (json == null){
             deferred.reject(err);
         } else {
+            console.log(json);
             var data = JSON.parse(json);
             DataService.prototype.userData['crossesByDay'] = data['crossesByDay'];
             DataService.prototype.userData['firstname'] = data['firstname'];
