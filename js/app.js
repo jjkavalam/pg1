@@ -230,12 +230,14 @@
                     
         router.start();
         
+        DataService.prototype.initializeOnStartUp();
+        
         DataService.prototype.isUserExist().then(
             function(isExist){
                 if (!isExist){                
                     slider.newPage(new NewUserView().render(true).$el);
                 } else {
-                    DataService.prototype.initializeOnStartUp().then(
+                    DataService.prototype.getUserData().then(
                         function(){
                             gotoHomeScreen();
                         },

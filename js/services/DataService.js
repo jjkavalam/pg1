@@ -42,18 +42,7 @@ DataService.prototype.contentData = {
 
 // done or reject
 DataService.prototype.initializeOnStartUp = function(){
-    var deferred = $.Deferred();       
-    
     Dataservice.prototype.filename = cordova.file.dataDirectory + "data.txt";
-    DataService.prototype.getUserData().then(
-        function(){
-            deferred.resolve();        
-        },
-        function(){
-            deferred.reject();
-        }
-    );
-    return deferred.promise();    
 }
 
 DataService.prototype.getUserData = function(){
