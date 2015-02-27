@@ -42,7 +42,7 @@ DataService.prototype.contentData = {
 
 // done or reject
 DataService.prototype.initializeOnStartUp = function(){
-    Dataservice.prototype.filename = cordova.file.dataDirectory + "data.txt";
+    DataService.prototype.filename = cordova.file.dataDirectory + "data.txt";
 }
 
 DataService.prototype.getUserData = function(){
