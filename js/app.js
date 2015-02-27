@@ -1,7 +1,7 @@
 // We use an "Immediate Function" to initialize the application to avoid leaving anything behind in the global scope
 (function () {
 
-    var debug = true;
+    var debug = false;
    
     /* ---------------------------------- Local Variables ---------------------------------- */
     CrossesView.prototype.template = Handlebars.compile($("#crosses-tpl").html());
@@ -49,8 +49,8 @@
         slider.newPage(mylentView.render().$el);    
     };
     
-    var networkError = function(){
-        alert('Err: Please ensure you are online and try again.');
+    var fileError = function(){
+        alert('File error.');
     }    
     
     var thisPartOfInitWorksOnThePCAlso = function(){
@@ -127,7 +127,7 @@
                         window.location.href='';
 
                     },
-                    networkError
+                    fileError
                 );            
             } else {    
             
@@ -158,7 +158,7 @@
                             // reload page
                             window.location.href='';
                         },
-                        networkError                
+                        fileError                
                     );
                     
                 }
@@ -220,18 +220,15 @@
                             slider.newPage($el, "zoom");
                             
                         },
-                        networkError
+                        fileError
                     );
                 },
-                networkError
+                fileError
             );
 
         });
                     
         router.start();
-
-        if (!debug)DataService.prototype.uid = device.uuid;        
-        if (debug) DataService.prototype.uid = 10;
         
         DataService.prototype.isUserExist().then(
             function(isExist){
@@ -242,11 +239,11 @@
                         function(){
                             gotoHomeScreen();
                         },
-                        networkError
+                        fileError
                     );        
                 }
             },
-            networkError
+            fileError
         );
         
 
@@ -269,7 +266,6 @@
             };
         }
         
-        //var uid = device.uuid;
         thisPartOfInitWorksOnThePCAlso();
         
     }, false);
