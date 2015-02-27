@@ -1,7 +1,7 @@
 // We use an "Immediate Function" to initialize the application to avoid leaving anything behind in the global scope
 (function () {
 
-    var debug = false;
+    var debug = true;
    
     /* ---------------------------------- Local Variables ---------------------------------- */
     CrossesView.prototype.template = Handlebars.compile($("#crosses-tpl").html());
@@ -28,7 +28,7 @@
     
         var weeknToday = userService.getWeekNOfToday();
         var isTodayHasCross = userService.isTodayHasCross();
-        if (debug) isTodayHasCross = false;
+        //if (debug) isTodayHasCross = false;
         var isThisWeek = (weeknToday == week_n);       
     
         var mylentView = new MylentView();
@@ -272,7 +272,7 @@
         
     }, false);
 
-    if (debug) $(document).ready(function(){thisPartOfInitWorksOnThePCAlso();});
+    //if (debug) $(document).ready(function(){thisPartOfInitWorksOnThePCAlso();});
     
     $(document).on("custom_event_community_count", function(){
         console.log('Event received');

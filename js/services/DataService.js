@@ -25,7 +25,7 @@ DataService.prototype.filename;
 
 // Pulled in by the service
 // The community code will be default
-DataService.prototype.userData = { 'crossesByDay' : [-1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1], 'firstname' : undefined, 'remindertime': undefined };
+DataService.prototype.userData = { 'crossesByDay' : [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1], 'firstname' : undefined, 'remindertime': undefined };
 
 // Static
 DataService.prototype.contentData = {
@@ -42,7 +42,7 @@ DataService.prototype.contentData = {
 
 // done or reject
 DataService.prototype.initializeOnStartUp = function(){
-    DataService.prototype.filename = "data4.txt";
+    DataService.prototype.filename = "data5.txt";
 }
 
 DataService.prototype.getUserData = function(){
@@ -51,7 +51,7 @@ DataService.prototype.getUserData = function(){
         if (json == null){
             deferred.reject(err);
         } else {
-            console.log(json);
+            console.log('getUserData: json='+json);
             var data = JSON.parse(json);
             DataService.prototype.userData['crossesByDay'] = data['crossesByDay'];
             DataService.prototype.userData['firstname'] = data['firstname'];
@@ -72,10 +72,10 @@ DataService.prototype.isUserExist = function(){
     
     FSWrapper.prototype.isFileExists(DataService.prototype.filename, function(exists,arg){
         if (exists){
-            console.log(arg);
+            console.log('isFileExists=true, arg='+arg);
             deferred.resolve(true);
         } else {
-            console.log(arg);
+            console.log('isFileExists=false, arg='+arg);
             deferred.resolve(false);
         }
     });
