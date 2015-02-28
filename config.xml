@@ -7,10 +7,10 @@
 
     <!-- versionCode is optional and Android only -->
 
-    <name>Lent</name>
+    <name>Lent App</name>
 
     <description>
-        Lent app
+        Lent App
     </description>
     
     <gap:plugin name="de.appplant.cordova.plugin.local-notification" version="0.7.5" />
