@@ -40,9 +40,10 @@
         alert('File error.');
     }    
     var utilSetAlarms = function(timestamp){
-        window.plugin.notification.local.cancelAll();                            
+        window.plugin.notification.local.cancelAll();
         var notificationId = 0;
         var end_time = new Date("Apr 4 2015 23:59:59");                             
+        if (false){
         while(timestamp < end_time){
             
             notificationId++;
@@ -55,6 +56,20 @@
             
             timestamp = new Date(timestamp.getTime()+(24*3600*1000));
         }     
+        } else {
+            for (var i = 0; i < 4; i++){
+                notificationId++;
+                window.plugin.notification.local.add({
+                    id: notificationId,
+                    title: 'Lent',
+                    date: timestamp,
+                    message: 'Dont forget todays cross',
+                });
+                
+                timestamp = new Date(timestamp.getTime()+(5*1000));
+            
+            }        
+        }
     }                            
 
     
