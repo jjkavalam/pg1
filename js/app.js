@@ -1,7 +1,7 @@
 // We use an "Immediate Function" to initialize the application to avoid leaving anything behind in the global scope
 (function () {
 
-    var debug = true;
+    var debug = false;
    
     /* ---------------------------------- Local Variables ---------------------------------- */    
     var cardService = new CardService();
@@ -16,7 +16,7 @@
     
         var weeknToday = userService.getWeekNOfToday();
         var isTodayHasCross = userService.isTodayHasCross();
-        //if (debug) isTodayHasCross = false;
+        if (debug) isTodayHasCross = false;
         var isThisWeek = (weeknToday == week_n);       
     
         var mylentView = new MylentView();
@@ -39,6 +39,24 @@
     var fileError = function(){
         alert('File error.');
     }    
+    var utilSetAlarms = function(timestamp){
+        window.plugin.notification.local.cancelAll();                            
+        var notificationId = 0;
+        var end_time = new Date("Apr 4 2015 23:59:59");                             
+        while(timestamp < end_time){
+            
+            notificationId++;
+            window.plugin.notification.local.add({
+                id: notificationId,
+                title: 'Lent',
+                date: timestamp,
+                message: 'Dont forget todays cross',
+            });
+            
+            timestamp = new Date(timestamp.getTime()+(24*3600*1000));
+        }     
+    }                            
+
     
     var initApp = function(){
         
@@ -80,7 +98,7 @@
             
             // find the timestamp of the next immediate alarm time
             var timestamp = new Date(1424188800000 + parseInt(remindertime)*(1000*3600) + minutes*60*1000);
-            var now = new Date();
+            var now = new Date();            
             while(timestamp < now){
                 timestamp = new Date(timestamp.getTime()+(24*3600*1000));
             }
@@ -94,14 +112,10 @@
                 DataService.prototype.createNewUser(name, remindertime).then(
                     function(){
                         
-                        if (!debug)
-                        window.plugin.notification.local.add({
-                            id: 1,
-                            title: 'Lent',
-                            date: timestamp,
-                            message: 'Dont forget todays cross',
-                            repeat: 'daily',
-                        });
+                        if (!debug){
+                            // add notifications from now till end of lent
+                            utilSetAlarms(timestamp);
+                        }
                     
                         alert('Welcome '+name);
 
@@ -113,7 +127,7 @@
                 );            
             } else {    
             
-                var isDontShowReminder = ($("#dont_show_reminder")[0]).checked;
+                var isDontShowReminder = parseInt($("#input_remindertime").val()) == -1;
                 if (isDontShowReminder){
                     if (!debug)
                     window.plugin.notification.local.cancelAll();
@@ -126,14 +140,9 @@
             
                     DataService.prototype.updateUserSettings(name, remindertime).then(
                         function(){
-                            if (!debug)
-                            window.plugin.notification.local.add({
-                                id: 1,
-                                title: 'Lent',
-                                date: timestamp,
-                                message: 'Dont forget todays cross',
-                                repeat: 'daily',                        
-                            });
+                            if (!debug){
+                                utilSetAlarms(timestamp);
+                            }
                         
                             alert('Settings updated');                        
 
@@ -154,6 +163,15 @@
             var mylentView = makeMylentView(eval(week_n));
             slider.newPage(mylentView.render().$el, transitionFx);
         });
+
+        router.addRoute('homescreen', function() {
+            gotoHomeScreen();
+        });
+        
+        router.addRoute('help', function() {
+            console.log('help');
+            slider.newPage(new HelpScreenView().render().$el);
+        });
         
         router.addRoute('settime/:time', function(time) {
             console.log('settime'+time);
@@ -168,7 +186,7 @@
         
         router.addRoute('crosses_close', function() {
             console.log('crosses_close');
-            slider.newPage(new HomeView(service).render().$el);
+            gotoHomeScreen();
         });            
 
         router.addRoute('ididit/:cross_idx', function(cross_idx) {
@@ -189,8 +207,7 @@
                             $('.nummycrosses', $el).html(userCrossCount-1);
                             
                             $('.sun',$el).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){                    
-                                    $('.nummycrosses', $el).html(userCrossCount);                                            
-                            
+                                    $('.nummycrosses', $el).html(userCrossCount);                                                                        
                                 Animate.prototype.animateNow($('.numcrosses', $el),'bounceIn').done(function(){
                                     $('.bar','.page').css('visibility','visible');
                                 });

@@ -4,8 +4,8 @@
     left:70%;
     width: 20%;
     height: 20%;
-    -webkit-animation:sunAnimation 6s ease-out 1s;
-    animation:sunAnimation 6s ease-out 1s
+    -webkit-animation:sunAnimation 3s ease-out 1s;
+    animation:sunAnimation 3s ease-out 1s
     animation-fill-mode: forwards;
     -webkit-animation-fill-mode: forwards;
 }
@@ -31,8 +31,8 @@
     left:30%;
     width: 30%;
     height: 30%;
-    -webkit-animation:cloud1Animation 6s ease-out 1s;
-    animation:cloud2Animation 6s ease-out 1s
+    -webkit-animation:cloud1Animation 3s ease-out 1s;
+    animation:cloud2Animation 3s ease-out 1s
     animation-fill-mode: forwards;
     -webkit-animation-fill-mode: forwards;
 }
@@ -57,8 +57,8 @@
     left:60%;
     width: 40%;
     height: 50%;
-    -webkit-animation:cloud2Animation 6s ease-out 1s;
-    animation:cloud2Animation 6s ease-out 1s
+    -webkit-animation:cloud2Animation 3s ease-out 1s;
+    animation:cloud2Animation 3s ease-out 1s
     animation-fill-mode: forwards;
     -webkit-animation-fill-mode: forwards;
 }

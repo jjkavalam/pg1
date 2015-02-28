@@ -31,9 +31,10 @@
                 <input class="input_name" type="text" placeholder="First name"/>
             </li>
             <li class="table-view-cell">
-                <b>Alarm time: </b>
-                <select class="input_remindertime" style="width: 50%;" >
+                <b>Set / Reset alarm: </b><br/>
+                <select class="input_remindertime" style="width: 100%; height: 40px;" >
                 <option value="9">Default (9 am)</option>
+                <option value="-1">Don't show reminders</option>                
                 <option value="0">12 midnight</option>
                 <option value="1">1 am</option>
                 <option value="2">2 am</option>
@@ -62,11 +63,7 @@
             </li>
             <li class="table-view-cell" style="display: none;">
                 <input style="display: none;" type="text" value="" class="input_remindertime_minute" placeholder="minutes"/>
-            </li>            
-            <li class="table-view-cell">
-                <input type="checkbox" id="dont_show_reminder">Don't show reminders any more
-            </li>
-            
+            </li>                        
         </ul>
         
     </div>
@@ -87,8 +84,9 @@
             <img src="assets/pics/clouds/cloud.svg" class="cloud2" />
             <div class="cloud_text" style="text-align: center;">
             
-            <span style="color: black; font-size: 1.1em;">
-                {{ message }}            
+            <span style="color: black; font-family: fantasy;">
+            <span style="font-size: 1.3em; ">{{ message }} Well done !</span><br/>
+            <span style="font-size: 1.1em; ">You completed today's challenge.</span>                 
             </span>
             
             <br/><br/><br/>
@@ -106,7 +104,7 @@
         </div>
     </div>
     <nav class="bar bar-tab" style="visibility: hidden;">
-      <a class="tab-item active" href="#">
+      <a class="tab-item active" href="#homescreen">
         <span class="icon icon-close"></span>
         <span class="tab-label">Back</span>
       </a>
@@ -165,7 +163,6 @@
                     <li class="pull-left" style="width: 70%; padding: 5px;">
                         <div>
                         <span class="{{style_class}}_userName" >{{userName}}</span>
-                        <span class="{{style_class}}_is" > is </span>
                         <span class="{{style_class}}_virtue" style="color: {{cross_pic}}">{{virtue}}</span>
                         </div>                    
                     </li>
@@ -176,9 +173,9 @@
         <br/><br/><br/><br/><br/>
     </div>
     <nav class="bar bar-tab">
-        <a class="tab-item active" href="">
+        <a class="tab-item active" href="#help" style="color: orange">
             <span class="icon icon-person"></span>
-            <span class="tab-label">My lent</span>
+            <span class="tab-label">Help</span>
         </a>
         {{#if isTodayHasCross}}
         <a class="tab-item">
@@ -186,12 +183,12 @@
             <span class="tab-label">Today's cross added</span>
         </a>          
         {{else}}        
-        <a class="tab-item" href="#addmycross">
+        <a class="tab-item" href="#addmycross" style="color: red">
             <span class="icon icon-plus"></span>
             <span class="tab-label">Add my cross</span>
         </a>  
         {{/if}}
-        <a class="tab-item" href="#show_settings">
+        <a class="tab-item" href="#show_settings" style="color: blue">
             <span class="icon icon-gear"></span>
             <span class="tab-label">Settings</span>
         </a>
@@ -251,6 +248,73 @@
     </div>
 </script>
 
+<script id="helpscreen-tpl" type="text/template">
+    <div class="content">
+    <div style="margin: 20px;">
+        <span style="font-size: 1.5em;"><b>How to use ?</b></span>
+        <p>
+        The Lent App challenges you to practice ONE virtuous act EVERY DAY during lent.
+        </p>
+        
+        <p>
+        Tap the <a class="tab-item" style="color: red; border: 1px solid lightgray;">
+            <span class="icon icon-plus"></span>
+            <span class="tab-label">Add my cross</span>
+        </a> button on the homescreen gives a suggestion list of what you can take up each day of lent.<br/>
+        </p>
+        
+        <p>
+        To tell Lent App what you did today, tap on any of the
+        <a href="#ididit/{{cross_idx}}"><span class="badge badge-positive" style="border-radius: 2px;">
+                        <span class="icon icon-check"></span>I did it</span></a>
+        buttons in the suggestion list. This will add a cross to your collection of crosses for lent.
+        </p>
+        
+        <p>
+        A <a class="tab-item" style="border: 1px solid lightgray;">
+            <span class="icon icon-check" style="color: green"></span>
+            <span class="tab-label">Today's cross added</span>
+        </a> message on the home screen indicates you have completed the day's task.
+        </p>
+        
+        <p>
+        Just in case you forget, the Lent App is programmed to display a notification on your phone every day. To change the time or disable the notification, use the 
+        <a class="tab-item" href="#show_settings" style="color: blue; border: 1px solid lightgray;">
+            <span class="icon icon-gear"></span>
+            <span class="tab-label">Settings</span>
+        </a> button on the homescreen. Alarms are active only during the Lent 2015 period.
+        <br>(See below for FAQs)
+        </p>
+        
+        <br/>
+        <span style="font-size: 1.5em;"><b>Frequently Asked Questions (FAQs)</b></span>
+        <p>
+        <b>1. Why can't I add more than one cross per day ?</b><br/>
+        This is intentional and is meant to help you focus on simply being virtuous every day.
+        </p>
+        <p>
+        <b>2. Can I see all he crosses I added so far during lent?</b><br/>
+        Yes. Use the &nbsp;<span class="icon icon-left-nav" style="border: 1px solid lightgray;"></span>, &nbsp;<span class="icon icon-right-nav" style="border: 1px solid lightgray;"></span> buttons on the top bar of the home screen.
+        </p>        
+        <p>
+        <b>3. What about the data Lent App collects ?</b><br/>
+        The Lent App is an offline application and no information is ever send out of your phone. I take you privacy seriously.
+        </p>
+        <p>
+        <b>4. I have a comment.</b><br/>
+        My blog is jjkavalam.wordpress.com. Please leave your comment there.
+        </p>
+        <br/><br/><br/><br/>
+    </div>
+    </div>
+    <nav class="bar bar-tab">
+      <a class="tab-item active" href="#homescreen">
+        <span class="icon icon-close"></span>
+        <span class="tab-label">Back</span>
+      </a>
+    </nav>      
+</script>
+
 <script src="cordova.js"></script>
 <script src="lib/FSWrapper.v1.3.js"></script>
 <script src="lib/fastclick.js"></script>
@@ -267,6 +331,7 @@
 <script src="js/CloudsView.js"></script>
 <script src="js/NewUserView.js"></script>
 <script src="js/SplashScreenView.js"></script>
+<script src="js/HelpScreenView.js"></script>
 <script src="js/app.js"></script>
 
 </body>

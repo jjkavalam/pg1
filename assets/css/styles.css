@@ -104,11 +104,11 @@ ul {
 }
 .mylent_content_style_1_virtue {
     font-family: fantasy; 
-    font-size: 2em; 
+    font-size: 1.6em; 
     position: relative;
     display:inline-block; 
-    transform: translateY(+30%);    
-    -webkit-transform: translateY(+30%);    
+    /*transform: translateY(+30%);    
+    -webkit-transform: translateY(+30%);    */
 }
 .mylent_content_style_1_box {
     margin:5px; 
