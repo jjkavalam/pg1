@@ -14,15 +14,17 @@
     </description>
     
     <gap:plugin name="de.appplant.cordova.plugin.local-notification" version="0.7.5" />
-    <gap:plugin name="org.apache.cordova.device" version="0.2.12" />
     <gap:plugin name="org.apache.cordova.file" version="1.3.1" />
     <gap:plugin name="org.apache.cordova.statusbar" version="0.1.4" />
+
+    <preference name="permissions" value="none"/>        
+    <feature name="http://api.phonegap.com/1.0/notification" />
     
     <author href="" email="jjkavalam@gmail.com">
         jjkavalam
     </author>
 
     <!-- whitelist access to all domains -->
-    <access origin="*" />
+    <!-- <access origin="*" /> -->
     
 </widget>
